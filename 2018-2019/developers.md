@@ -6,3 +6,4 @@
 | Korinin38 | Artem Korinin | lichinusnavalnovo@gmail.com |
 | minerg321 | Mihail Lavruhin | michugn1342@gmail.com |
 | MaxRada | Max Radaev | metalmax2001@gmail.com |
+| grandmeister | Nikita Komlev | nik_2002k@mail.ru |
