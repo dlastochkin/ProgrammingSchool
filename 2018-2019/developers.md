@@ -1,3 +1,4 @@
-| Name | E-Mail |
-| ------ | ------ |
-| dlastochkin | d.lastochkin.cp@gmail.com |
+| Nick| Name | E-Mail |
+| ------ | ------ | ------ |
+| dlastochkin | Dmitrii Lastochkin | d.lastochkin.cp@gmail.com |
+| Korinin38 | Artem Korinin | lichinusnavalnovo@gmail.com |
