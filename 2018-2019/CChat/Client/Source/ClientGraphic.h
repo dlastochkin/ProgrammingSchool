@@ -12,7 +12,10 @@ private:
 	void drawChatInterface(); //Отрисовка самого чата 
 	void drawUserTable(); //Таблица пользователей
 	void printMessage(QString message); //отрисовка сообщений
-
+	
+private slots:
+	void Users(); //Участники чата
+	void Send(); //Отправить сообщение
 };
 
 
