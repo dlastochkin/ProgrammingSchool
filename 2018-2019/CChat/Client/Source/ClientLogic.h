@@ -5,7 +5,9 @@
 
 class ClientLogic : public QObject
 {
+
 	Q_OBJECT
+
 public:
 	ClientLogic(const QString& ip, int port, QObject* parent = 0);
 	~ClientLogic();
@@ -17,17 +19,14 @@ private:
 	int nameOfClient;
 	//trace
 
-
-
 private:
-	void getMessageFromServer(); //Получение сообщений с сервера 
-	void sendMessageToServer(QString message); //Отправка сообщений на сервер
-	void getClientName();
+	void getMessageFromServer(); //РџРѕР»СѓС‡РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ РѕС‚ СЃРµСЂРІРµСЂР° 
+	void sendMessageToServer(QString message); //РџРµСЂРµРґР°С‡Р° СЃРѕРѕР±С‰РµРЅРёСЏ СЃРµСЂРІРµСЂСѓ 
+	void getClientName(); //РРјСЏ РєР»РёРµРЅС‚Р°
 
 private slots:
-	void connectedSlot(); //Cлот подключения
-	void disconnectedSlot(); //Слот отключения
-	void errorSlot(QAbstractSocket::SocketError); //Слот ошибок
-	void 
+	void connect(); //РїРѕРґРєР»СЋС‡РµРЅРёРµ
+	void disconnecte(); //РјРёСЂРЅРѕРµ РѕС‚РєР»СЋС‡РµРЅРёРµ РѕС‚ СЃРµСЂРІРµСЂР°
+	void error(QAbstractSocket::SocketError); //РѕС€РёР±РєРё
 };
 

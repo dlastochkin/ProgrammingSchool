@@ -3,15 +3,16 @@
 
 class MessageDisplayWidget : public QWidget
 {
+
+	Q_OBJECT
+	
 public:
 	MessageDisplayWidget();
 	~MessageDisplayWidget();
-	void addMessage(); //Добавить сообщение в чат
-	void clear(); //очистить чат
+
 private:
-	void display(); //Отрисовка дисплея
-	void scrollDown(); //Перемещение ползунка вниз
-	
-
-
+	void printMessage(QString messageText, QString userName); //Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ Рё РёРјРµРЅРё
+	//void printName(); //Р’Р«РІРѕРґ РёРјРµРЅРё
+	void drawBackground(); //Р—Р°РґРЅРёР№ С„РѕРЅ СЃРѕРѕР±С‰РµРЅРёСЏ
+	void clear(); //РѕС‡РёСЃС‚РєР°
 };
