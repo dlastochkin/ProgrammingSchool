@@ -1,6 +1,7 @@
 | Nick| Name | E-Mail |
 | ------ | ------ | ------ |
 | dlastochkin | Dmitrii Lastochkin | d.lastochkin.cp@gmail.com |
+| Golchina | Olga Golchina | Golchina-Olya@mail.ru |
 | Korinin38 | Artem Korinin | lichinusnavalnovo@gmail.com |
 | minerg321 | Mihail Lavruhin | michugn1342@gmail.com |
 | MaxRada | Max Radaev | metalmax2001@gmail.com |
@@ -13,4 +14,7 @@
 | Rokfessor | Isbulatov Maxim | mr.rokf@mail.ru |
 | HedgehogLALA | Egor Ezhov |  egor.ezhov.01@mail.ru |
 | anovoshenin | Alexey Novoshenin | lexa_novoshenin@mail.ru |
+| grandmeister | Nikita Komlev | nik_2002k@mail.ru |
+| AlertLouis | Alexander Loy | loy2001@list.ru |
+
 
