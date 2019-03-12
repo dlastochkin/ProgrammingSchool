@@ -14,3 +14,6 @@
 | HedgehogLALA | Egor Ezhov |  egor.ezhov.01@mail.ru |
 | anovoshenin | Alexey Novoshenin | lexa_novoshenin@mail.ru |
 | grandmeister | Nikita Komlev | nik_2002k@mail.ru |
+| AlertLouis | Alexander Loy | loy2001@list.ru |
+
+
