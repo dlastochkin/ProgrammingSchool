@@ -11,14 +11,15 @@ public:
 	~ClientGraphic();
 
 private:
-	void drawConnectionInterface(); //Интерфейс авторизации
-	void drawChatInterface(); //Интерфейс чата 
-	void drawInputLine(); //Строка ввода текста
-	void drawTabDialog(); //Вкладки с диалогами 
+	void showConnectionForm(); //Интерфейс авторизации
+	void showChatForm(); //Интерфейс чата 
+	void showTabDialog(); //Вкладки с диалогами 
 	
 private slots:
 	void showUserList(); //Список пользователей
 	void changeDialog(); //Смена диалога
+
+	//Добавить сигналы
 };
 
 
