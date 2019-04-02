@@ -7,5 +7,5 @@ FileTraceDestination::FileTraceDestination(QString destinationFile, QObject * pa
 
 void FileTraceDestination::putMessage(TraceMessage message)
 {
-	messageList.append(message);
+	//cout << message.toString();
 }

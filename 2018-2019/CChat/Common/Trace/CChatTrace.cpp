@@ -1,80 +1,14 @@
-#pragma once
 #include "CChatTrace.h"
 #include <fstream>
+using namespace std;
 
-TraceMessage::TraceMessage(QString body, MessageSeverity type = EVENT, dateType dtype = INTERNATIONAL, QDateTime dateTime = NULL)
-{
-	this->body = body;
-	this->type = type;
-	if (dateTime.isValid())
-	{
-		this->dtype = dt;
-	}
-	else
-	{
-		dt = QDateTime::CurrentDayTime();
-	}
-	this->dtype = dtype;
-}
-
-void TraceMessage::setDateType(dateType dtype)
-{
-	this->dtype = dtype;
-}
-
-QString TraceMessage::out()
-{
-	QString out;
-	switch (type)
-	{
-	case EVENT:
-		out += "(";
-		break;
-	case WARNRNG:
-		out += "Warning:(";
-		break;
-	case ERROR:
-		out += "Error:(";
-		break;
-	}
-
-	switch (dtype)
-	{
-	case INTERNATIONAL:
-		out += dt.toString("dd-MM-yyyy, hh:mm:ss");
-			break;
-	case USA:
-		out += dt.toString("MM-dd-yyyy, hh:mm:ss");
-			break;
-	case GERMANY:
-		out += dt.toString("dd.MM.yyyy, hh:mm:ss");
-			break;
-	case UK:
-		out += dt.toString("dd/MM/yyyy, hh:mm:ss");
-			break;
-	case HUNGARY:
-		out += dt.toString("yyyy-MM-dd, hh:mm:ss");
-			break;
-	}
-
-	out += ") " + body;
-	return out;
-}
-
-TraceMessage::~TraceMessage(){}
-
-
-CChatTrace::CChatTrace(QWidget* parent = nullptr, QString filename, dateType dtype = INTERNATIONAL) : QWidget(parent)
-{
-	this->filename = "trace" + filename + ".log";
-	this->dtype = dtype;
-}
+CChatTrace::CChatTrace(QObject* parent) : QObject(parent) {}
 
 void CChatTrace::import()
-{
+{/*
 	string s, s1;
 	MessageSeverity mtype;
-	ifstream in(filename);
+	ifstream in;
 	if (in.is_open())
 	{
 		while (getline(in, s))
@@ -102,30 +36,16 @@ void CChatTrace::import()
 			int i1 = i + 1;
 			while (s[i] != ')') ++i;
 			s1 = s.substr(i1, i-i1);
-			QDateTime dt;
-			switch (dtype)
-			{
-			case INTERNATIONAL:
-				dt = QDateTime::fromString(s1, "dd-MM-yyyy, hh:mm:ss");
-				break;
-			case USA:
-				dt = QDateTime::fromString(s1, "MM-dd-yyyy, hh:mm:ss");
-				break;
-			case GERMANY:
-				dt = QDateTime::fromString(s1, "dd.MM.yyyy, hh:mm:ss");
-				break;
-			case UK:
-				dt = QDateTime::fromString(s1, "dd/MM/yyyy, hh:mm:ss");
-				break;
-			case HUNGARY:
-				dt = QDateTime::fromString(s1, "yyyy-MM-dd, hh:mm:ss");
-				break;
-			}
-			i1 = min(i + 2), s.size()-1;
+			QDateTime dateTime;
+
+			dateTime = QDateTime::fromString(s1, "dd.MM.yyyy, hh:mm:ss");
+			i1 = min(i + 2, s.size()-1);
 			s1 = s.substr(i1, s.size() - i1 - 1);
-			list.insert(TraceMessage(s1, mtype, dtype, dt));
+			list.insert(TraceMessage(s1, mtype, dateTime));
 		}
 	}
+	//does not work yet...
+	*/
 }
 
 void CChatTrace::transmit(TraceMessage message)
@@ -135,18 +55,14 @@ void CChatTrace::transmit(TraceMessage message)
 
 void CChatTrace::add(QString ms, MessageSeverity type)
 {
-	TraceMessage mt(ms, type, dtype);
-	list.insert(mt);
-	transmit(mt);
-}
-
-void CChatTrace::setDateType(dateType dtype)
-{
-	this->dtype = dtype;
+	TraceMessage mt(ms, type);
+	messageList.append(mt);
+	//messageList.insert(messageList.end(), mt);
+	emit messageListUpdated();
 }
 
 CChatTrace::~CChatTrace()
 {
-	while (list.size() > 0)
-		delete(list.pop_front());
+	while (messageList.isEmpty())
+		messageList.removeFirst();
 }

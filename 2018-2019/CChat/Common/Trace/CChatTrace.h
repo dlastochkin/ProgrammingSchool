@@ -1,44 +1,27 @@
 #pragma once
-#include <QWidget>
-#include <list>
-#include <QString>
-#include <QDateTime>
+#include <QObject>
+#include <QList>
+#include "TraceMessage.h"
+#include "FileTraceDestination.h"
+#include "ListTraceDestination.h"
 
-enum MessageSeverity = { EVENT, WARNING, ERROR };
-enum dateType = { INTERNATIONAL, USA, GERMANY, UK, HUNGARY };
 
-class TraceMessage
-{
-private:
-	MessageSeverity type;
-	dateType dtype;
-	QString body;
-	QDateTime dt;
-public:
-	TraceMessage(QString body, MessageSeverity type = EVENT, dateType dtype = INTERNATIONAL, QDateTime dt = NULL);
-	void setDateType(dateType dtype);
-	QString out();
-	~TraceMessage();
-};
-
-class CChatTrace : public QWidget
+class CChatTrace : public QObject
 {
 	Q_OBJECT;
 
 private:
-	dateType dtype;
 	QString filename;
-	Qlist <TraceMessage> list;
+	QList <TraceMessage> messageList;
+	QList <AbstractTraceDestination> destinationList;
 
-
-public signals:
-	listIncreased(TraceMessage message);
+signals:
+	void messageListUpdated();
 public slots:
 	void transmit(TraceMessage message);
 public:
-	CChatTrace(QWidget* parent = nullptr, QString filename = "", dateType dtype = INTERNATIONAL);
+	CChatTrace(QObject* parent = nullptr);
 	void import();
-	void add(QString ms, MessageSeverity type = EVENT);
-	void setDateType(dateType dtype);
+	void add(QString ms, MessageSeverity type);
 	~CChatTrace();
 };
