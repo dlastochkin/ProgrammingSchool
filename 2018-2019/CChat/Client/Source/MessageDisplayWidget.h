@@ -1,9 +1,11 @@
 #pragma once
-#include <QWidget.h>
+#include <QWidget>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QPainter>
 
 class MessageDisplayWidget : public QWidget
 {
-
 	Q_OBJECT
 	
 public:
