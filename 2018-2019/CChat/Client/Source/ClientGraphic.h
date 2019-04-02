@@ -3,23 +3,19 @@
 
 class ClientGraphic : public QWidget 
 {
-
-	Q_OBJECT
-
 public:
 	ClientGraphic();
 	~ClientGraphic();
 
 private:
-	void showConnectionForm(); //РРЅС‚РµСЂС„РµР№СЃ Р°РІС‚РѕСЂРёР·Р°С†РёРё
-	void showChatForm(); //РРЅС‚РµСЂС„РµР№СЃ С‡Р°С‚Р° 
-	void showTabDialog(); //Р’РєР»Р°РґРєРё СЃ РґРёР°Р»РѕРіР°РјРё 
+	void drawConnectionInterface(); //Отрисовка стартового окна
+	void drawChatInterface(); //Отрисовка самого чата 
+	void drawUserTable(); //Таблица пользователей
+	void printMessage(QString message); //отрисовка сообщений
 	
 private slots:
-	void showUserList(); //РЎРїРёСЃРѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
-	void changeDialog(); //РЎРјРµРЅР° РґРёР°Р»РѕРіР°
-
-	//Р”РѕР±Р°РІРёС‚СЊ СЃРёРіРЅР°Р»С‹
+	void Users(); //Участники чата
+	void Send(); //Отправить сообщение
 };
 
 

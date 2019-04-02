@@ -2,38 +2,32 @@
 
 #include <QObject>
 #include <QTcpSocket>
-#include "ClientGraphic.h"
 
 class ClientLogic : public QObject
 {
-
 	Q_OBJECT
-
 public:
-	ClientLogic(QObject* parent = 0);
+	ClientLogic(const QString& ip, int port, QObject* parent = 0);
 	~ClientLogic();
 
 private:
 	quint16 nextBlockSize;
 	QTcpSocket socket; 
 	int version;
-	QString userName;
+	int nameOfClient;
 	//trace
-	ClientGraphic* gui;
+
+
 
 private:
-	void initSocket(const QString& ip, int port); // Р’РІРѕРґ РёРјРµРЅРё, IP, РїРѕСЂС‚Р°
-	void getMessageFromServer(); //РџРѕР»СѓС‡РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ РѕС‚ СЃРµСЂРІРµСЂР° 
-	void sendMessageToServer(QString message); //РџРµСЂРµРґР°С‡Р° СЃРѕРѕР±С‰РµРЅРёСЏ СЃРµСЂРІРµСЂСѓ 
-	void getClientName(); //РРјСЏ РєР»РёРµРЅС‚Р°
+	void getMessageFromServer(); //Получение сообщений с сервера 
+	void sendMessageToServer(QString message); //Отправка сообщений на сервер
+	void getClientName();
 
 private slots:
-	void connect(); //РїРѕРґРєР»СЋС‡РµРЅРёРµ
-	void disconnecte(); //РјРёСЂРЅРѕРµ РѕС‚РєР»СЋС‡РµРЅРёРµ РѕС‚ СЃРµСЂРІРµСЂР°
-	void error(QAbstractSocket::SocketError); //РѕС€РёР±РєРё
-
-	/*
-		Р”РѕР±Р°РІРёС‚СЊ СЃР»РѕС‚С‹ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё СЃРёРіРЅР°Р»РѕРІ GUI
-	*/
+	void connectedSlot(); //Cлот подключения
+	void disconnectedSlot(); //Слот отключения
+	void errorSlot(QAbstractSocket::SocketError); //Слот ошибок
+	void 
 };
 
