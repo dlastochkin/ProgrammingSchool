@@ -1,97 +1,106 @@
-#pragma once
+ï»¿#pragma once
 
 #include <QWidget.h>
-#include "ÑÑhatServerGUI.h"
+#include "CChatServerGUI.h"
 
 
-ÑÑhatServerGUI::~ÑÑhatServerGUI()
+CChatServerGUI::~CChatServerGUI()
 {
 }
 
-void ÑÑhatServerGUI::drawClientsList()
+void CChatServerGUI::drawClientsList()
 {
 }
 
-void ÑÑhatServerGUI::drawMessageBox()
+void CChatServerGUI::drawMessageBox()
 {
 }
 
-void ÑÑhatServerGUI::drawMessageButton()
+void CChatServerGUI::startServer()
 {
 }
 
-void ÑÑhatServerGUI::drawTraceButton()
+void CChatServerGUI::drawMessageButton()
 {
 }
 
-void ÑÑhatServerGUI::drawStartStop()
+void CChatServerGUI::drawTraceButton()
 {
 }
 
-void ÑÑhatServerGUI::drawServerInfo()
+void CChatServerGUI::drawStartStop()
 {
 }
 
-void ÑÑhatServerGUI::drawMoreBox()
+void CChatServerGUI::drawServerInfo()
 {
 }
 
-void ÑÑhatServerGUI::drawChatList()
+void CChatServerGUI::drawMoreBox()
 {
 }
 
-void ÑÑhatServerGUI::stopServer()
+void CChatServerGUI::drawChatList()
 {
 }
 
-void ÑÑhatServerGUI::updateList()
+void CChatServerGUI::stopServer()
 {
 }
 
-void ÑÑhatServerGUI::sendMessageConectSlot(QString messsage)
+void CChatServerGUI::startServerSignal()
+{
+
+}
+
+void CChatServerGUI::updateList()
 {
 }
 
-void ÑÑhatServerGUI::sendMessageSlot(QString messsage)
+void CChatServerGUI::sendMessageConectSlot(QString messsage)
 {
 }
 
-void ÑÑhatServerGUI::traceSlot()
+void CChatServerGUI::sendMessageSlot(QString messsage)
 {
 }
 
-void ÑÑhatServerGUI::kickSlot()
+void CChatServerGUI::traceSlot()
 {
 }
 
-void ÑÑhatServerGUI::showMoreSlot()
+void CChatServerGUI::kickSlot()
 {
 }
 
-void ÑÑhatServerGUI::stopServerSignal()
+void CChatServerGUI::showMoreSlot()
 {
 }
 
-void ÑÑhatServerGUI::updateListSignal()
+void CChatServerGUI::stopServerSignal()
 {
 }
 
-void ÑÑhatServerGUI::sendMessageConectSignal(QString messsage)
+void CChatServerGUI::updateListSignal()
 {
 }
 
-void ÑÑhatServerGUI::sendMessageSignal(QString messsage)
+void CChatServerGUI::sendMessageConectSignal(QString messsage)
 {
 }
 
-void ÑÑhatServerGUI::traceSignal()
+void CChatServerGUI::sendMessageSignal(QString messsage)
 {
 }
 
-void ÑÑhatServerGUI::kickSignal()
+void CChatServerGUI::traceSignal()
 {
 }
 
-void ÑÑhatServerGUI::showMoreSignal()
+void CChatServerGUI::kickSignal()
+{
+}
+
+void CChatServerGUI::showMoreSignal()
 {
 }

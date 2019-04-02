@@ -40,6 +40,11 @@ void CChatServer::stop()
 {
 }
 
+void CChatServer::newClientConnectionSlot()
+{
+
+}
+
 void CChatServer::showMore()
 {
 }

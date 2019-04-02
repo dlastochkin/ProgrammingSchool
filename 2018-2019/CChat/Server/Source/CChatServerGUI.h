@@ -2,42 +2,46 @@
 
 #include <QWidget.h>
 
-class ССhatServerGUI : public QObject
+class CChatServerGUI : public QObject
 {
 	Q_OBJECT
 
-	public:
-		ССhatServerGUI();
-		~ССhatServerGUI();
+public:
+	CChatServerGUI()
+	{
 
-	private:
-		void drawClientsList();
-		void drawMessageBox(); //Строка сообщения
-		void drawMessageButton(); //Кнопка сообщения
-		void drawTraceButton(); //Кнопка для вызова трассы
-		void drawStartStop(); //Кнопка для старта/остановки сервера
-		void drawServerInfo();
-		void drawMoreBox();
-		void drawChatList();
+	}
+	~CChatServerGUI();
 
-	private slots:
-		void startServer();
-		void stopServer();
-		void updateList();
-		void sendMessageConectSlot(QString messsage);
-		void sendMessageSlot(QString messsage);
-		void traceSlot();
-		void kickSlot();
-		void showMoreSlot();
+private:
+	void drawClientsList();
+	void drawMessageBox(); //Строка сообщения
+	void drawMessageButton(); //Кнопка сообщения
+	void drawTraceButton(); //Кнопка для вызова трассы
+	void drawStartStop(); //Кнопка для старта/остановки сервера
+	void drawServerInfo();
+	void drawMoreBox();
+	void drawChatList();
 
-	signals:
-		void startServerSignal();
-		void stopServerSignal();
-		void updateListSignal();
-		void sendMessageConectSignal(QString messsage);
-		void sendMessageSignal(QString messsage);
-		void traceSignal();
-		void kickSignal();
-		void showMoreSignal();
+private slots:
+	void startServer();
+	void stopServer();
+	void updateList();
+	void sendMessageConectSlot(QString messsage);
+	void sendMessageSlot(QString messsage);
+	void traceSlot();
+	void kickSlot();
+	void showMoreSlot();
+
+signals:
+	void startServerSignal();
+	void stopServerSignal();
+	void updateListSignal();
+	void sendMessageConectSignal(QString messsage);
+	void sendMessageSignal(QString messsage);
+	void traceSignal();
+	void kickSignal();
+	void showMoreSignal();
 };
+
 
