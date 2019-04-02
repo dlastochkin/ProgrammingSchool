@@ -12,7 +12,7 @@ class CChatServer : public QObject
 
 private:
 	QTcpServer* server;
-	Qmap<QTcpSocket*, QString> map;
+	QMap<QTcpSocket*, QString> map;
 	quint16 nextBlockSize;
 	int version;
 	
@@ -42,6 +42,6 @@ private slots:
 	void showMoreSlot();
 
 public:
-	SimpleServer(QObject *parent = 0);
-	~SimpleServer();
+	CChatServer(QObject *parent = 0);
+	~CChatServer();
 };
