@@ -1,42 +1,97 @@
 #pragma once
 
 #include <QWidget.h>
+#include "ÑÑhatServerGUI.h"
 
-class ÑÑhatServerGUI : public QObject
+
+ÑÑhatServerGUI::~ÑÑhatServerGUI()
 {
-	Q_OBJECT
+}
 
-	public:
-		ÑÑhatServerGUI();
-		~ÑÑhatServerGUI();
+void ÑÑhatServerGUI::drawClientsList()
+{
+}
 
-	private:
-		void drawClientsList();
-		void drawMessageBox(); //Ñòğîêà ñîîáùåíèÿ
-		void drawMessageButton(); //Êíîïêà ñîîáùåíèÿ
-		void drawTraceButton(); //Êíîïêà äëÿ âûçîâà òğàññû
-		void drawStartStop(); //Êíîïêà äëÿ ñòàğòà/îñòàíîâêè ñåğâåğà
-		void drawServerInfo();
-		void drawMoreBox();
-		void drawChatList();
+void ÑÑhatServerGUI::drawMessageBox()
+{
+}
 
-	private slots:
-		void startServer();
-		void stopServer();
-		void updateList();
-		void sendMessageConectSlot(QString messsage);
-		void sendMessageSlot(QString messsage);
-		void traceSlot();
-		void kickSlot();
-		void showMoreSlot();
+void ÑÑhatServerGUI::drawMessageButton()
+{
+}
 
-	signals:
-		void startServerSignal();
-		void stopServerSignal();
-		void updateListSignal();
-		void sendMessageConectSignal(QString messsage);
-		void sendMessageSignal(QString messsage);
-		void traceSignal();
-		void kickSignal();
-		void showMoreSignal();
-};
+void ÑÑhatServerGUI::drawTraceButton()
+{
+}
+
+void ÑÑhatServerGUI::drawStartStop()
+{
+}
+
+void ÑÑhatServerGUI::drawServerInfo()
+{
+}
+
+void ÑÑhatServerGUI::drawMoreBox()
+{
+}
+
+void ÑÑhatServerGUI::drawChatList()
+{
+}
+
+void ÑÑhatServerGUI::stopServer()
+{
+}
+
+void ÑÑhatServerGUI::updateList()
+{
+}
+
+void ÑÑhatServerGUI::sendMessageConectSlot(QString messsage)
+{
+}
+
+void ÑÑhatServerGUI::sendMessageSlot(QString messsage)
+{
+}
+
+void ÑÑhatServerGUI::traceSlot()
+{
+}
+
+void ÑÑhatServerGUI::kickSlot()
+{
+}
+
+void ÑÑhatServerGUI::showMoreSlot()
+{
+}
+
+void ÑÑhatServerGUI::stopServerSignal()
+{
+}
+
+void ÑÑhatServerGUI::updateListSignal()
+{
+}
+
+void ÑÑhatServerGUI::sendMessageConectSignal(QString messsage)
+{
+}
+
+void ÑÑhatServerGUI::sendMessageSignal(QString messsage)
+{
+}
+
+void ÑÑhatServerGUI::traceSignal()
+{
+}
+
+void ÑÑhatServerGUI::kickSignal()
+{
+}
+
+void ÑÑhatServerGUI::showMoreSignal()
+{
+}
