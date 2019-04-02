@@ -1,17 +1,20 @@
 #pragma once
 #include <QWidget.h>
+#include <QColor.h>
 
 class MessageDisplayWidget : public QWidget
 {
+
+	Q_OBJECT
+	
 public:
 	MessageDisplayWidget();
 	~MessageDisplayWidget();
-	void addMessage(); //Добавить сообщение в чат
-	void clear(); //очистить чат
-private:
-	void display(); //Отрисовка дисплея
-	void scrollDown(); //Перемещение ползунка вниз
-	
 
-
+public:
+	void printMessage(QString* messageText, QString* userName); //Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ Рё РёРјРµРЅРё
+	//void printName(); //Р’С‹РІРѕРґ РёРјРµРЅРё
+	void setMessageBackground(QColor* color); //Р—Р°РґРЅРёР№ С„РѕРЅ СЃРѕРѕР±С‰РµРЅРёСЏ
+	void setBackground(QColor* color);
+	void clear(); //РѕС‡РёСЃС‚РєР°
 };
