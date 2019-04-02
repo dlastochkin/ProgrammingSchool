@@ -1,11 +1,12 @@
 #pragma once
+
 #include <QWidget.h>
 
-class ÑÑhatServerGUI
+class ÑÑhatServerGUI : public QObject
 {
 	Q_OBJECT
 
-public:
+/*public:
 	ÑÑhatServerGUI();
 	~ÑÑhatServerGUI();
 
@@ -29,7 +30,7 @@ private slots:
 	void kickSlot();
 	void showMoreSlot();
 
-public signals:
+signals:
 	void startServerSignal();
 	void stopServerSignal();
 	void updateListSignal();
@@ -37,6 +38,6 @@ public signals:
 	void sendMessageSignal(QString messsage);
 	void traceSignal();
 	void kickSignal();
-	void showMoreSignal();
+	void showMoreSignal();*/
 };
 
