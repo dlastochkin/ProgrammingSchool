@@ -3,34 +3,35 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPainter>
-#include <QWidget.h>
-#include <QColor.h>
+#include <QWidget>
+#include <QColor>
 #include <QScrollArea>
 #include <QMainWindow>
 #include <QHBoxLayout>
 #include <QTextEdit>
 #include <QDesktopWidget>
+#include <QApplication>
+#include <QLabel>
+
+
+
 
 class MessageDisplayWidget : public QMainWindow
 {
 	Q_OBJECT
-	
+
 public:
 	MessageDisplayWidget(int width, int height);
 	~MessageDisplayWidget();
-	void addMessage(); //???? ????? ???
-	void clear(); //???? ??
+
+	void clear(); //Очистка содержимого 
+	//void setMessageBackground(QColor* color); //Задний фон сообщения
+	void addScrollArea(QFrame* parent, QVBoxLayout* layout); //Инициализация виджета вывода сообщений
+	void printMessage(QString messageText, QString userName); //Вывод сообщения и имени
+	
 private:
-	void display(); //?????????
-	void scrollDown(); //?????? ???? ??
-
-public:
-	void printMessage(QString messageText, QString* userName, QScrollArea* scrollArea); //Вывод сообщения и имени
-	//void printName(); //Вывод имени
-	void setMessageBackground(QColor* color); //Задний фон сообщения
-	void clear(); //очистка
-	void addScrollArea(QFrame* parent, QHBoxLayout* layout);
-
-public:
+	QVBoxLayout* scrollAreaLayout = NULL;
+	//QTextEdit* message = NULL;
+	QLabel* message;
 	QScrollArea* scrollArea;
 };
