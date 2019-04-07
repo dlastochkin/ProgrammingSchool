@@ -1,0 +1,95 @@
+#include "ClientGraphic.h"
+
+ClientGraphic::ClientGraphic(int width, int height) : QMainWindow()
+{
+	QDesktopWidget* desktop = QApplication::desktop();  //
+	this->setGeometry(500, 100, width, height);	
+	this->setMinimumSize(400, 500);// Окно
+
+	this->setStyleSheet("background-color : QColor(0, 0, 35, 255);"); // 
+
+	centralFrame = new QFrame(this);				//
+	centralLayout = new QVBoxLayout(centralFrame); //
+	this->setCentralWidget(centralFrame);		  // Frame / Layout
+	centralFrame->setLayout(centralLayout);		 //
+
+	messageDisplay = new MessageDisplayWidget(); // Инициализация виджета вывода сообщений
+
+	drawChatInterface();
+}
+
+void ClientGraphic::drawConnectionInterface()
+{
+}
+
+void ClientGraphic::drawChatInterface()
+{
+	//===========Название конференции/имя адресата и кнопка показа всех участников
+	QHBoxLayout* confName_UsersButton = new QHBoxLayout(centralFrame);
+	QLabel* confName = new QLabel("Conference Name");
+	confName->setStyleSheet("QLabel { background-color : QColor(0, 0, 25, 255);}");
+
+
+	userListButton = new QPushButton("USERS",centralFrame);
+	userListButton->setMinimumSize(60, 50);
+	userListButton->setMaximumSize(100,90);
+	userListButton->setStyleSheet("QPushButton { background-color : QColor(0, 0, 25, 255); border - style: outset; border - width: 2px; border - color: beige;}");
+	//userListButton->setMenu(NULL); //попытка сделать выпадающее меню 
+	//userListButton->menu();		 //
+
+	confName_UsersButton->addWidget(confName);
+	confName_UsersButton->addWidget(userListButton);
+	centralLayout->addLayout(confName_UsersButton);
+
+	//===========Виджет вывода сообщений
+	messageDisplay->setScrollArea(centralFrame, centralLayout);
+
+	//===========Поле ввода текста и кнопка SEND===========================
+	QHBoxLayout* sendButton_InputField = new QHBoxLayout(centralFrame);
+	sendButton = new QPushButton("SEND",centralFrame);
+	sendButton->setMinimumHeight(40);
+	sendButton->setMaximumSize(50, 45);
+	sendButton->setStyleSheet("QPushButton {background-color : QColor(0, 0, 25, 255);}");
+	//connect(sendButton, SIGNAL(clicked()), this, SLOT(showUserList()));
+
+	drawInputField(centralFrame, sendButton_InputField);
+	sendButton_InputField->addWidget(sendButton);
+	centralLayout->addLayout(sendButton_InputField);
+}
+
+void ClientGraphic::drawInputField(QFrame* parent, QHBoxLayout* layout)
+{
+	inputField = new QTextEdit(parent);
+	layout->addWidget(inputField);
+	inputField->setPlaceholderText("Enter your message...");
+	inputField->setMinimumSize(100,30);
+	inputField->setMaximumHeight(40);
+
+	inputField->setStyleSheet("QTextEdit {background-color : QColor(0, 0, 65, 255); color : black;}");
+	inputField->setFrameShape(QFrame::NoFrame);
+}
+
+void ClientGraphic::drawUserTable()
+{
+}
+
+void ClientGraphic::setMessageAndUserName(QString message, QString username)
+{
+	messageText = message;
+	userName = username;
+}
+
+void ClientGraphic::printClientMessage()
+{
+	messageText = inputField->toPlainText();
+	printMessage();
+}
+
+void ClientGraphic::printMessage()
+{
+	messageDisplay->printMessage(messageText, userName);
+}
+
+ClientGraphic::~ClientGraphic()
+{
+}
