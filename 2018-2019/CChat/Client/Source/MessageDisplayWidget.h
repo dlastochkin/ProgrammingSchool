@@ -12,21 +12,19 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QLabel>
+#include <iostream>
 
-
-
-
-class MessageDisplayWidget : public QMainWindow
+class MessageDisplayWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	MessageDisplayWidget(int width, int height);
+	MessageDisplayWidget(); 
 	~MessageDisplayWidget();
 
 	void clear(); //Очистка содержимого 
 	//void setMessageBackground(QColor* color); //Задний фон сообщения
-	void addScrollArea(QFrame* parent, QVBoxLayout* layout); //Инициализация виджета вывода сообщений
+	void setScrollArea(QFrame* parent, QVBoxLayout* layout); //Инициализация виджета вывода сообщений
 	void printMessage(QString messageText, QString userName); //Вывод сообщения и имени
 	
 private:
