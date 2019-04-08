@@ -1,11 +1,20 @@
 #include "FileTraceDestination.h"
+#include <QFile>
+#include <QTextStream>
 
-FileTraceDestination::FileTraceDestination(QString destinationFile, QObject * parent) : AbstractTraceDestination(parent)
+FileTraceDestination::FileTraceDestination(QString destinationFilename, QObject * parent) : AbstractTraceDestination(parent)
 {
-	this->destinationFile = destinationFile;
+	this->destinationFilename = destinationFilename;
 }
 
-void FileTraceDestination::putMessage(TraceMessage message)
+void FileTraceDestination::putMessage(TraceMessage * message)
 {
-	//cout << message.toString();
+	QFile file(destinationFilename);
+	if (!file.open(QIODevice::ReadOnly))
+	{
+	}
+	QTextStream out(&file);
+	QString str;
+	out << message->toString() << "\n";
+	file.close();
 }

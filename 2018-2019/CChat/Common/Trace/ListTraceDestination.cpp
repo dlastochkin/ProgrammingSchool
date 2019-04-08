@@ -5,7 +5,7 @@ ListTraceDestination::ListTraceDestination(QList<TraceMessage>* destinationList,
 	this->destinationList = destinationList;
 }
 
-void ListTraceDestination::putMessage(TraceMessage message)
+void ListTraceDestination::putMessage(TraceMessage * message)
 {
 	destinationList->append(message);
 }

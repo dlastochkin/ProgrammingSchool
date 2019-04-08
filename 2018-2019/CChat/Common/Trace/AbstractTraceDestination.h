@@ -8,5 +8,5 @@ class AbstractTraceDestination : public QObject
 	Q_OBJECT;
 public:
 	AbstractTraceDestination(QObject* parent = nullptr) : QObject(parent) {}
-	virtual void putMessage(TraceMessage message) = 0;
+	virtual void putMessage(TraceMessage* message) = 0;
 };

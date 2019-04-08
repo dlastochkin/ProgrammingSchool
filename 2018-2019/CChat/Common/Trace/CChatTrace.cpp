@@ -1,11 +1,14 @@
 #include "CChatTrace.h"
+#include "TraceLoader.h"
 #include <fstream>
 using namespace std;
 
 CChatTrace::CChatTrace(QObject* parent) : QObject(parent) {}
 
-void CChatTrace::import()
-{/*
+void CChatTrace::import(QString filename)
+{
+	messageList = TraceLoader::load(filename);
+	/*
 	string s, s1;
 	MessageSeverity mtype;
 	ifstream in;
@@ -44,16 +47,23 @@ void CChatTrace::import()
 			list.insert(TraceMessage(s1, mtype, dateTime));
 		}
 	}
-	//does not work yet...
 	*/
+}
+
+void CChatTrace::addDestination(AbstractTraceDestination* destination)
+{
+	destinationList.append(destination);
 }
 
 void CChatTrace::transmit(TraceMessage message)
 {
-	//does nothing yet...
+	for (int i = 0; i <= destinationList.size(); ++i)
+	{
+		destinationList.at(i)->putMessage(&message);
+	}
 }
 
-void CChatTrace::add(QString ms, MessageSeverity type)
+void CChatTrace::addMessage(QString ms, MessageSeverity type)
 {
 	TraceMessage mt(ms, type);
 	messageList.append(mt);

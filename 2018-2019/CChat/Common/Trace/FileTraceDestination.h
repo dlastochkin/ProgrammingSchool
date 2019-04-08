@@ -7,8 +7,8 @@ class FileTraceDestination : public AbstractTraceDestination
 {
 	Q_OBJECT;
 private:
-	QString destinationFile;
+	QString destinationFilename;
 public:
-	FileTraceDestination(QString destinationFile, QObject* parent = nullptr); 
-	void putMessage(TraceMessage message);
+	FileTraceDestination(QString destinationFilename, QObject* parent = nullptr); 
+	void putMessage(TraceMessage* message);
 };

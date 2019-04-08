@@ -15,5 +15,5 @@ private:
 public:
 	TraceMessage(QString body, MessageSeverity type, QDateTime* dateTime = nullptr, QObject* parent = nullptr);
 	QString toString();
-	bool fromString(QString str);
+	bool fromString(QString str); //overwrites this; returns false if parse failed and true otherwise
 };

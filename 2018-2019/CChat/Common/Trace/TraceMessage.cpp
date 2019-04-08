@@ -65,10 +65,10 @@ bool TraceMessage::fromString(QString str)
 	}
 	else
 	{
-		body = "Import error";
+		body = "Parse failed";
 		type = ERROR;
 		dateTime = new QDateTime(QDate::currentDate(), QTime::currentTime());
-		return 1;
+		return false;
 	}
 
 	for (i1 = i + 1; i1 < str.size(); ++i1)
@@ -81,12 +81,12 @@ bool TraceMessage::fromString(QString str)
 	dateTime = &(QDateTime::fromString(tmp, "dd.MM.yyyy, hh:mm:ss"));
 	if (dateTime->isNull())
 	{
-		body = "Import error";
+		body = "Parse failed";
 		type = ERROR;
 		dateTime = new QDateTime(QDate::currentDate(), QTime::currentTime());
-		return 1;
+		return false;
 	}
 
 	body = str.right(i1);
-	return 0;
+	return true;
 }
