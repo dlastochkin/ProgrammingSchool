@@ -6,8 +6,14 @@ MessageDisplayWidget::MessageDisplayWidget()
 
 void MessageDisplayWidget::printMessage(QString messageText, QString userName)
 {
+	QFrame* messageFrame = new QFrame(scrollArea);
+	QLabel* messageLabel = new QLabel(messageFrame);
+	QLabel* message = new QLabel(scrollArea);
 	message->setText(messageText);
-	std::cout << "!";
+
+	message->setStyleSheet("background-color : QColor(0, 0, 65, 255); color : black;");
+	message->setFont(QFont("Courier", 13, QFont::Bold));
+
 	scrollAreaLayout->addWidget(message);
 }
 
@@ -21,10 +27,6 @@ void MessageDisplayWidget::setScrollArea(QFrame* parent, QVBoxLayout* layout)
 	scrollArea->setLayout(scrollAreaLayout);
 	scrollArea->setStyleSheet("background-color : QColor(0, 0, 35, 255);");
 	scrollArea->setFrameShape(QFrame::NoFrame);
-
-	//message = new QLabel(scrollArea);
-
-	//message->setStyleSheet("background-color : QColor(0, 0, 65, 255); color : black;");
 }
 
 void MessageDisplayWidget::clear()

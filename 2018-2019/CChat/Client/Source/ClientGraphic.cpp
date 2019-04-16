@@ -26,14 +26,15 @@ void ClientGraphic::drawChatInterface()
 {
 	//===========Название конференции/имя адресата и кнопка показа всех участников
 	QHBoxLayout* confName_UsersButton = new QHBoxLayout(centralFrame);
-	QLabel* confName = new QLabel("Conference Name");
-	confName->setStyleSheet("QLabel { background-color : QColor(0, 0, 25, 255);}");
+	QLabel* confName = new QLabel("Conference name");
+	confName->setStyleSheet("QLabel { background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255);}");
+	confName->setFont(QFont("Courier", 15, QFont::Bold));
 
-
-	userListButton = new QPushButton("USERS",centralFrame);
+	userListButton = new QPushButton("Users",centralFrame);
 	userListButton->setMinimumSize(60, 50);
 	userListButton->setMaximumSize(100,90);
-	userListButton->setStyleSheet("QPushButton { background-color : QColor(0, 0, 25, 255); border - style: outset; border - width: 2px; border - color: beige;}");
+	userListButton->setFont(QFont("Courier", 15, QFont::Bold));
+	userListButton->setStyleSheet("QPushButton {background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255);}");
 	//userListButton->setMenu(NULL); //попытка сделать выпадающее меню 
 	//userListButton->menu();		 //
 
@@ -46,10 +47,11 @@ void ClientGraphic::drawChatInterface()
 
 	//===========Поле ввода текста и кнопка SEND===========================
 	QHBoxLayout* sendButton_InputField = new QHBoxLayout(centralFrame);
-	sendButton = new QPushButton("SEND",centralFrame);
+	sendButton = new QPushButton("Send",centralFrame);
 	sendButton->setMinimumHeight(40);
 	sendButton->setMaximumSize(50, 45);
-	sendButton->setStyleSheet("QPushButton {background-color : QColor(0, 0, 25, 255);}");
+	sendButton->setFont(QFont("Courier", 13, QFont::Bold));
+	sendButton->setStyleSheet("QPushButton {background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255);}");
 	//connect(sendButton, SIGNAL(clicked()), this, SLOT(showUserList()));
 
 	drawInputField(centralFrame, sendButton_InputField);
@@ -64,8 +66,9 @@ void ClientGraphic::drawInputField(QFrame* parent, QHBoxLayout* layout)
 	inputField->setPlaceholderText("Enter your message...");
 	inputField->setMinimumSize(100,30);
 	inputField->setMaximumHeight(40);
+	inputField->setFont(QFont("Courier", 9, QFont::Bold));
 
-	inputField->setStyleSheet("QTextEdit {background-color : QColor(0, 0, 65, 255); color : black;}");
+	inputField->setStyleSheet("QTextEdit {background-color : QColor(0, 0, 65, 255); color : QColor(0, 0, 180, 255);}");
 	inputField->setFrameShape(QFrame::NoFrame);
 }
 

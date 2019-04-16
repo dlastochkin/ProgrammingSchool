@@ -29,7 +29,6 @@ public:
 	
 private:
 	QVBoxLayout* scrollAreaLayout = NULL;
-	//QTextEdit* message = NULL;
-	QLabel* message;
-	QScrollArea* scrollArea;
+	QScrollArea* scrollArea = NULL;
+	QWidget* scrollAreaWidget = NULL;
 };
