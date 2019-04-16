@@ -16,13 +16,12 @@
 
 void CChatServer::sendMessageConect(QString messsage)
 {
-	QByteArray* arr = new QByteArray();
-	QDataStream* os = new QDataStream(arr, QIODevice::WriteOnly);
+	
 }
 
 void CChatServer::sendMessage(QString message, QString fromUsername)
 {
-		QObject* owner = sender();
+		
 
 		QByteArray messageBytes;		
 		QDataStream os(&messageBytes, QIODevice::WriteOnly);
@@ -32,10 +31,13 @@ void CChatServer::sendMessage(QString message, QString fromUsername)
 		qint8 type;
 
 		os >> type;
-		qDebug() << "Received command " << type;
+		qDebug() << "Received command: " << type;
 
 		qint32 length;
 		os >> length;
+
+		QString message;
+		os >> message;
 
 		switch (type)
 		{
@@ -48,16 +50,59 @@ void CChatServer::sendMessage(QString message, QString fromUsername)
 
 			foreach(QString value, clients.values())
 			{
-				fromSocket = clients.key(value);
+				if(value == fromUsername) clients.key(value)->write(messageBytes);// only one (if with no that: !=)
 			}
-
-			fromSocket->write(messageBytes);
 		}
 		case CLIENT_CONNECTED:
 		{
-			//out « type;
-			//« name;//NameOfOurClient
-			//socket->write(messageBytes);
+			os << type << quint32(0) << fromUsername;//name
+			os.device()->seek(1);
+
+			os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(fromUsername));
+
+
+			foreach(QString value, clients.values())
+			{
+				clients.key(value)->write(messageBytes);// to all
+			}
+		}
+		case CLIENTS_LIST:
+		{
+			unsigned long long nameSize;//size of all names
+
+			os << type << quint32(0);//MinorBite and MajorBite quint16
+			foreach(QString value, clients.values())
+			{
+				os << value << '\\0';
+				nameSize += sizeof(value);
+			}
+			os.device()->seek(1);
+
+			os << quint32(messageBytes.size() - sizeof(quint32) - nameSize);
+
+
+			foreach(QString value, clients.values())
+			{
+				if (value == fromUsername) clients.key(value)->write(messageBytes);//to sender
+			}
+		}
+		case PRIVATE_MESSAGE:
+		{
+			QStringList to = message.split("\\0");
+			for (int i = 0; i < message.size()-1; i++)
+			{
+				if (message.at(i) == "\\" && message.at(i + 1) == "0") message = message.right(i + 1);
+			}
+
+			os << type << quint32(0) << message;//message
+			os.device()->seek(1);
+
+			os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+			foreach(QString value, clients.values())
+			{
+				if (value == to[0]) clients.key(value)->write(messageBytes);// only one (if with no that: !=)
+			}
 		}
 		}
 		/*out « type« quint32(0) « message;
@@ -146,8 +191,14 @@ void CChatServer::showMoreSlot()
 {
 }
 
+void incomeConnection()
+{
+
+}
+
 CChatServer::CChatServer(QObject * parent)
 {
+	server = new QTcpServer(this);
 }
 
 CChatServer::~CChatServer()

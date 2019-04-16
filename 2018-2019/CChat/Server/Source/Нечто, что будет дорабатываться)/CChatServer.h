@@ -17,6 +17,7 @@ private:
 	qint8 minorV = 0x1;
 	qint8 majorV = 0x0;
 
+
 private:
 	void sendMessageConect(QString messsage); 	// ������������ �����������
 	void sendMessage(QString message, QString fromUsername); //��������� ���������
