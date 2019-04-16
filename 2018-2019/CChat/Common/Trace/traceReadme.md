@@ -1,7 +1,5 @@
-# ProgrammingSchool
-Public repository for Programming School projects
+Пример использования:
 
-Пример испольхования:
 <code>
 #include "CChatTrace.h"
 
