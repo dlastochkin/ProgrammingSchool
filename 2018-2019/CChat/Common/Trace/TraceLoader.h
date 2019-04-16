@@ -8,5 +8,5 @@ class TraceLoader : public QObject
 {
 	Q_OBJECT;
 public:
-	static QList<TraceMessage> load(QString filename);
+	static QList<TraceMessage*> load(QString filename);
 };

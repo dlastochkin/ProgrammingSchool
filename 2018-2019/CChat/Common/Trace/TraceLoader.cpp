@@ -3,23 +3,24 @@
 #include <QTextStream>
 #include "TraceLoader.h"
 
-QList<TraceMessage> TraceLoader::load(QString filename) //returns empty list if load is failed or loaded list
+QList<TraceMessage*> TraceLoader::load(QString filename) //returns empty list if load is failed or loaded list
 {
-	QList<TraceMessage> result;
+	QList<TraceMessage*> result;
 	QFile file(filename);
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		TraceMessage err("File open failed", ERROR);
+		TraceMessage* err = new TraceMessage("File open failed", ERROR);
 		result.append(err);
 		return result;
 	}
 	QTextStream in(&file);
 	QString str;
-	TraceMessage tmp("",ERROR);
 	while(!in.atEnd())
 	{
+		TraceMessage* tmp = new TraceMessage("",ERROR);
 		str = in.readLine();	
-		tmp.fromString(str);
+		tmp->fromString(str);
+		result.append(tmp);
 	}
 	file.close();
 	return result;

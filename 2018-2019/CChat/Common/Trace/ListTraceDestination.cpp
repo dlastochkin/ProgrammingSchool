@@ -1,6 +1,6 @@
 #include "ListTraceDestination.h"
 
-ListTraceDestination::ListTraceDestination(QList<TraceMessage>* destinationList, QObject * parent) : AbstractTraceDestination(parent)
+ListTraceDestination::ListTraceDestination(QList<TraceMessage*>* destinationList, QObject * parent) : AbstractTraceDestination(parent)
 {
 	this->destinationList = destinationList;
 }

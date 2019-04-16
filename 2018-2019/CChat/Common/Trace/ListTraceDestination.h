@@ -9,6 +9,6 @@ class ListTraceDestination : public AbstractTraceDestination
 private:
 	QList<TraceMessage*>* destinationList;
 public:
-	ListTraceDestination(QList<TraceMessage>* destinationList, QObject* parent = nullptr);
+	ListTraceDestination(QList<TraceMessage*>* destinationList, QObject* parent = nullptr);
 	void putMessage(TraceMessage* message);
 };
