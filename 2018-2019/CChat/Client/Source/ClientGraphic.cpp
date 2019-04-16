@@ -16,6 +16,15 @@ ClientGraphic::ClientGraphic(int width, int height) : QMainWindow()
 	messageDisplay = new MessageDisplayWidget(); // Инициализация виджета вывода сообщений
 
 	drawChatInterface();
+
+	setMessageAndUserName("dsakldmsa", "djklsamndas");
+	printMessage();
+	setMessageAndUserName("bcva", "djklsamndas");
+	printMessage();
+	setMessageAndUserName("dcxzsa", "djklsamndas");
+	printMessage();
+	setMessageAndUserName("cccccmsa", "djklsamndas");
+	printMessage();
 }
 
 void ClientGraphic::drawConnectionInterface()
@@ -24,9 +33,9 @@ void ClientGraphic::drawConnectionInterface()
 
 void ClientGraphic::drawChatInterface()
 {
-	//===========Название конференции/имя адресата и кнопка показа всех участников
+	//===========Название конференции / имя адресата и кнопка показа всех участников
 	QHBoxLayout* confName_UsersButton = new QHBoxLayout(centralFrame);
-	QLabel* confName = new QLabel("Conference name");
+	QLabel* confName = new QLabel(" Conference name");
 	confName->setStyleSheet("QLabel { background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255);}");
 	confName->setFont(QFont("Courier", 15, QFont::Bold));
 

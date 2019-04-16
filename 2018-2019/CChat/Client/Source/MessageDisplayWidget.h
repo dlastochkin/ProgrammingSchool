@@ -1,18 +1,15 @@
 #pragma once
 #include <QWidget>
-#include <QLineEdit>
-#include <QTextEdit>
-#include <QPainter>
 #include <QWidget>
-#include <QColor>
 #include <QScrollArea>
 #include <QMainWindow>
-#include <QHBoxLayout>
-#include <QTextEdit>
+#include <QVBoxLayout>
+#include <QSpacerItem>
 #include <QDesktopWidget>
-#include <QApplication>
 #include <QLabel>
+#include <QApplication>
 #include <iostream>
+#include <QTextEdit>
 
 class MessageDisplayWidget : public QWidget
 {
@@ -23,7 +20,6 @@ public:
 	~MessageDisplayWidget();
 
 	void clear(); //Очистка содержимого 
-	//void setMessageBackground(QColor* color); //Задний фон сообщения
 	void setScrollArea(QFrame* parent, QVBoxLayout* layout); //Инициализация виджета вывода сообщений
 	void printMessage(QString messageText, QString userName); //Вывод сообщения и имени
 	
