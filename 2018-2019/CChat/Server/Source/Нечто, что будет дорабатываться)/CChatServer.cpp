@@ -12,6 +12,7 @@
 #define SERVER_SHUTDOWN		0X8
 #define KEEP_ALIVE_RQ		0X9
 #define KEEP_ALIVE_RS		0XA
+#define SERVER_REJECTED_REQUEST		0XB
 
 
 void CChatServer::sendMessageConect(QString messsage)
@@ -21,11 +22,9 @@ void CChatServer::sendMessageConect(QString messsage)
 
 void CChatServer::sendMessage(QString message, QString fromUsername)
 {
-		
-
 		QByteArray messageBytes;		
 		QDataStream os(&messageBytes, QIODevice::WriteOnly);
-		QTcpSocket* fromSocket;
+		//QTcpSocket* fromSocket;
 		//QDataStream out(&messageBytes, QIODevice::WriteOnly);
 
 		qint8 type;
@@ -42,7 +41,18 @@ void CChatServer::sendMessage(QString message, QString fromUsername)
 		switch (type)
 		{
 		case VERSION:
-		{
+		{	
+			qint8 c_minorV;
+			qint8 c_majorV;
+
+			os >> c_minorV >> c_majorV;
+
+			if (c_majorV != majorV)
+			{
+				//DISCONNECT CLIENT
+				return;
+			}
+
 			os << type << quint32(0) << minorV << majorV;//MinorBite and MajorBite quint16
 			os.device()->seek(1);
 
@@ -55,10 +65,10 @@ void CChatServer::sendMessage(QString message, QString fromUsername)
 		}
 		case CLIENT_CONNECTED:
 		{
-			os << type << quint32(0) << fromUsername;//name
+			os << type << quint32(0) << fromUsername + "connected";//name
 			os.device()->seek(1);
 
-			os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(fromUsername));
+			os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
 
 
 			foreach(QString value, clients.values())
@@ -66,35 +76,11 @@ void CChatServer::sendMessage(QString message, QString fromUsername)
 				clients.key(value)->write(messageBytes);// to all
 			}
 		}
-		case CLIENTS_LIST:
-		{
-			unsigned long long nameSize;//size of all names
-
-			os << type << quint32(0);//MinorBite and MajorBite quint16
-			foreach(QString value, clients.values())
-			{
-				os << value << '\\0';
-				nameSize += sizeof(value);
-			}
-			os.device()->seek(1);
-
-			os << quint32(messageBytes.size() - sizeof(quint32) - nameSize);
-
-
-			foreach(QString value, clients.values())
-			{
-				if (value == fromUsername) clients.key(value)->write(messageBytes);//to sender
-			}
-		}
 		case PRIVATE_MESSAGE:
 		{
-			QStringList to = message.split("\\0");
-			for (int i = 0; i < message.size()-1; i++)
-			{
-				if (message.at(i) == "\\" && message.at(i + 1) == "0") message = message.right(i + 1);
-			}
-
-			os << type << quint32(0) << message;//message
+			QStringList to = message.split("\0");
+			
+			os << type << quint32(0) << fromUsername + ":" + to[1];//message
 			os.device()->seek(1);
 
 			os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
@@ -104,15 +90,60 @@ void CChatServer::sendMessage(QString message, QString fromUsername)
 				if (value == to[0]) clients.key(value)->write(messageBytes);// only one (if with no that: !=)
 			}
 		}
-		}
-		/*out « type« quint32(0) « message;
-		out.device()->seek(1);
-		out « quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+		case CHAT_MESSAGE:
+		{
+			os << type << quint32(0) << fromUsername + ":" + message;//message
+			os.device()->seek(1);
 
-		socket->write(messageBytes);*/
-		
-	
+			os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+			foreach(QString value, clients.values())
+			{
+				clients.key(value)->write(messageBytes);// for all
+			}
+		}
+		case CLIENT_DISCONNECTED:
+		{
+			os << type << quint32(0) << fromUsername + "disconnected";//name
+			os.device()->seek(1);
+
+			os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+
+			foreach(QString value, clients.values())
+			{
+				clients.key(value)->write(messageBytes);// to all
+			}
+		}
+		case KEEP_ALIVE_RS:
+		{
+			//smth
+		}
+		}
 }
+
+/*
+case CLIENTS_LIST:
+		{
+			//unsigned long long nameSize;//size of all names
+
+			os << type << quint32(0);//MinorBite and MajorBite quint16
+			foreach(QString value, clients.values())
+			{
+				os << value << '\0';
+				//nameSize += sizeof(value);
+			}
+			os.device()->seek(1);
+
+			os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+
+			foreach(QString value, clients.values())
+			{
+				if (value == fromUsername) clients.key(value)->write(messageBytes);//to sender
+			}
+		}
+*/
 
 void CChatServer::printServerInfo(QString messsage)
 {
