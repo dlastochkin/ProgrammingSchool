@@ -3,7 +3,7 @@
 #include "TraceMessage.h"
 #include <iostream>
 
-TraceMessage::TraceMessage(QString body, MessageSeverity type, QDateTime* dateTime, QObject* parent) : QObject(parent)
+TraceMessage::TraceMessage(QString body, int type, QDateTime* dateTime, QObject* parent) : QObject(parent)
 {
 	this->body = body;
 	this->type = type;
@@ -30,16 +30,16 @@ QString TraceMessage::toString()
 	QString out;
 	switch (type)
 	{
-	case DEBUG:
+	case MessageSeverity::DEBUG:
 		out += "Debug(";
 		break;
-	case EVENT:
+	case MessageSeverity::EVENT:
 		out += "Event(";
 		break;
-	case WARNING:
+	case MessageSeverity::WARNING:
 		out += "Warning(";
 		break;
-	case ERROR:
+	case MessageSeverity::ERROR:
 		out += "Error(";
 		break;
 	}
@@ -70,24 +70,24 @@ bool TraceMessage::fromString(QString str)
 	QString tmp = str.left(i);
 	if (tmp == "Debug")
 	{
-		type = DEBUG;
+		type = MessageSeverity::DEBUG;
 	}
 	else if (tmp == "Event")
 	{
-		type = EVENT;
+		type = MessageSeverity::EVENT;
 	}
 	else if (tmp == "Warning")
 	{
-		type = WARNING;
+		type = MessageSeverity::WARNING;
 	}
 	else if (tmp == "Error")
 	{
-		type = ERROR;
+		type = MessageSeverity::ERROR;
 	}
 	else
 	{
 		body = "Parse failed";
-		type = ERROR;
+		type = MessageSeverity::ERROR;
 		dateTime->setDate(QDate::currentDate());
 		dateTime->setTime(QTime::currentTime());
 		return false;
@@ -105,7 +105,7 @@ bool TraceMessage::fromString(QString str)
 	if (dateTime->isNull())
 	{
 		body = "Parse failed";
-		type = ERROR;
+		type = MessageSeverity::ERROR;
 		dateTime->setDate(QDate::currentDate());
 		dateTime->setTime(QTime::currentTime());
 		return false;

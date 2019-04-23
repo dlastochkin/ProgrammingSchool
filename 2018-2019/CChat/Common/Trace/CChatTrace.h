@@ -22,7 +22,7 @@ public slots:
 public:
 	CChatTrace(QObject* parent = nullptr);
 	void import(QString filename);
-	void add(QString ms, MessageSeverity type);
+	void add(QString ms, int type);
 	void addDestination(AbstractTraceDestination* destination);
 	~CChatTrace();
 };

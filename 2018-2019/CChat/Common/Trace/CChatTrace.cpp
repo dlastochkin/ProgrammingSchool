@@ -27,7 +27,7 @@ void CChatTrace::transmit(TraceMessage* message)
 	}
 }
 
-void CChatTrace::add(QString ms, MessageSeverity type)
+void CChatTrace::add(QString ms, int type)
 {
 	TraceMessage* mt = new TraceMessage(ms, type);
 	messageList.append(mt);

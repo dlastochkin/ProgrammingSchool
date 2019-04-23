@@ -9,7 +9,7 @@ QList<TraceMessage*> TraceLoader::load(QString filename) //returns empty list if
 	QFile file(filename);
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		TraceMessage* err = new TraceMessage("File open failed", ERROR);
+		TraceMessage* err = new TraceMessage("File open failed", MessageSeverity::ERROR);
 		result.append(err);
 		return result;
 	}
@@ -17,7 +17,7 @@ QList<TraceMessage*> TraceLoader::load(QString filename) //returns empty list if
 	QString str;
 	while(!in.atEnd())
 	{
-		TraceMessage* tmp = new TraceMessage("",ERROR);
+		TraceMessage* tmp = new TraceMessage("",MessageSeverity::ERROR);
 		str = in.readLine();	
 		tmp->fromString(str);
 		result.append(tmp);
