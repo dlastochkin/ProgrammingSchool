@@ -17,7 +17,7 @@ ClientGraphic::ClientGraphic(int width, int height) : QMainWindow()
 
 	drawChatInterface();
 
-	setMessageAndUserName("dsakldmsa", "djklsamndas");
+	setMessageAndUserName("<div style='word-break:break-all;'> dsakff fds fsd fsdfdsf sdf dsf dsf ds fsd fsd fsd </div>", "djklsamndas");
 	printMessage();
 	setMessageAndUserName("bcva", "djklsamndas");
 	printMessage();
