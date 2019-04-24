@@ -1,14 +1,14 @@
 #pragma once
-/*#include <QObject>
-#include <QList>
+#include <QObject>
 #include "AbstractTraceDestination.h"
+#include "CChatTraceWidget.h"
 
 class WidgetTraceDestination : public AbstractTraceDestination
 {
 	Q_OBJECT;
 private:
-	QList<TraceMessage*>* destinationList;
+	CChatTraceWidget* destinationWidget;
 public:
-	WidgetTraceDestination(QList<TraceMessage*>* destinationList, QObject* parent = nullptr);
+	WidgetTraceDestination(CChatTraceWidget* destinationWidget, QObject* parent = nullptr);
 	void putMessage(TraceMessage* message);
-};*/
+};

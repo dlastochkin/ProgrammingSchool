@@ -4,6 +4,7 @@
 #include "TraceMessage.h"
 #include "FileTraceDestination.h"
 #include "ListTraceDestination.h"
+#include "WidgetTraceDestination.h"
 
 
 class CChatTrace : public QObject
@@ -14,11 +15,10 @@ private:
 	QString filename;
 	QList <TraceMessage*> messageList;
 	QList <AbstractTraceDestination*> destinationList;
+	void transmit(TraceMessage* message);
 
 signals:
 	void messageListUpdated();
-public slots:
-	void transmit(TraceMessage* message);
 public:
 	CChatTrace(QObject* parent = nullptr);
 	void import(QString filename);

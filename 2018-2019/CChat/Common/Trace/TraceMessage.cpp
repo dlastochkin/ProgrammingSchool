@@ -114,3 +114,8 @@ bool TraceMessage::fromString(QString str)
 	body = str.right(str.size()-i1);
 	return true;
 }
+
+int TraceMessage::getType()
+{
+	return type;
+}

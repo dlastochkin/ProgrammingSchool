@@ -11,9 +11,8 @@ class CChatTraceWidget : public QWidget
 private:
 	QListWidget* listWidget;
 
-signals:
-	void messageListUpdated();
 public:
 	CChatTraceWidget(QWidget* parent = nullptr);
 	void initialize();
+	void TraceMessageToQListWidgetItem(TraceMessage* message);
 };
