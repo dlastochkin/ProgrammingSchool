@@ -2,9 +2,10 @@
 #include <QObject>
 #include <QList>
 #include "TraceMessage.h"
-#include "FileTraceDestination.h"
+#include "AbstractTraceDestination.h"
+/*#include "FileTraceDestination.h"
 #include "ListTraceDestination.h"
-#include "WidgetTraceDestination.h"
+#include "WidgetTraceDestination.h"*/
 
 
 class CChatTrace : public QObject
