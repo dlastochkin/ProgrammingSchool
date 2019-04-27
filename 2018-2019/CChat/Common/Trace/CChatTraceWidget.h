@@ -10,7 +10,8 @@ class CChatTraceWidget : public QWidget
 
 private:
 	QListWidget* listWidget;
-
+private slots:
+	void filterItems(QString text);
 public:
 	CChatTraceWidget(QWidget* parent = nullptr);
 	void initialize();
