@@ -3,6 +3,7 @@
 #include "MessageDisplayWidget.h"
 #include <QPushButton>
 #include <QColor>
+#include <QScrollBar>
 
 class ClientGraphic : public QMainWindow
 {
@@ -33,7 +34,7 @@ public slots:
 							//но скорее всего за это будет отвечать 
 								//выпадающая кнопка userLisetButton
 
-	void printClientMessage(); //Вывод сообщения клиента
+	void sendMessage(); //Вывод сообщения клиента
 };
 
 

@@ -12,19 +12,20 @@ ClientGraphic::ClientGraphic(int width, int height) : QMainWindow()
 	centralLayout = new QVBoxLayout(centralFrame); //
 	this->setCentralWidget(centralFrame);		  // Frame / Layout
 	centralFrame->setLayout(centralLayout);		 //
-
+	centralLayout->setAlignment(Qt::AlignBottom);
 	messageDisplay = new MessageDisplayWidget(); // Инициализация виджета вывода сообщений
 
 	drawChatInterface();
 
-	setMessageAndUserName("<div style='word-break:break-all;'> dsakff fds fsd fsdfdsf sdf dsf dsf ds fsd fsd fsd </div>", "djklsamndas");
+	setMessageAndUserName("Hello, how are you doing? I will fsdjk fsdjk fnsdjk fnsdjk fndsjk", "djklsamndas");
 	printMessage();
-	setMessageAndUserName("bcva", "djklsamndas");
+	setMessageAndUserName("Hek fnsdjk be so happy to see you today! ", "djklsamndas");
 	printMessage();
-	setMessageAndUserName("dcxzsa", "djklsamndas");
+	setMessageAndUserName("","");
 	printMessage();
-	setMessageAndUserName("cccccmsa", "djklsamndas");
+	setMessageAndUserName("fdafdsafsda", "djklsamndas");
 	printMessage();
+	
 }
 
 void ClientGraphic::drawConnectionInterface()
@@ -61,7 +62,7 @@ void ClientGraphic::drawChatInterface()
 	sendButton->setMaximumSize(50, 45);
 	sendButton->setFont(QFont("Courier", 13, QFont::Bold));
 	sendButton->setStyleSheet("QPushButton {background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255);}");
-	//connect(sendButton, SIGNAL(clicked()), this, SLOT(showUserList()));
+	//sendButton->connect(sendButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
 
 	drawInputField(centralFrame, sendButton_InputField);
 	sendButton_InputField->addWidget(sendButton);
@@ -70,13 +71,14 @@ void ClientGraphic::drawChatInterface()
 
 void ClientGraphic::drawInputField(QFrame* parent, QHBoxLayout* layout)
 {
+	QScrollBar* scroll = new QScrollBar(parent);
 	inputField = new QTextEdit(parent);
 	layout->addWidget(inputField);
 	inputField->setPlaceholderText("Enter your message...");
 	inputField->setMinimumSize(100,30);
 	inputField->setMaximumHeight(40);
 	inputField->setFont(QFont("Courier", 9, QFont::Bold));
-
+	inputField->setVerticalScrollBar(scroll);
 	inputField->setStyleSheet("QTextEdit {background-color : QColor(0, 0, 65, 255); color : QColor(0, 0, 180, 255);}");
 	inputField->setFrameShape(QFrame::NoFrame);
 }
@@ -91,10 +93,12 @@ void ClientGraphic::setMessageAndUserName(QString message, QString username)
 	userName = username;
 }
 
-void ClientGraphic::printClientMessage()
+void ClientGraphic::sendMessage()
 {
 	messageText = inputField->toPlainText();
+	setMessageAndUserName(messageText, "aaaa");
 	printMessage();
+	inputField->clear();
 }
 
 void ClientGraphic::printMessage()
