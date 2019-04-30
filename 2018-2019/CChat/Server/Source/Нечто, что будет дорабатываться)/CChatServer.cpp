@@ -20,7 +20,7 @@ void CChatServer::sendMessageConect(QString messsage)
 	
 }
 
-void CChatServer::sendMessage(QString message, QString fromUsername)
+void CChatServer::sendMessage(QString fromUsername)
 {
 		QByteArray messageBytes;		
 		QDataStream os(&messageBytes, QIODevice::WriteOnly);

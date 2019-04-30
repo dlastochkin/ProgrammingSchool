@@ -20,7 +20,7 @@ private:
 
 private:
 	void sendMessageConect(QString messsage); 	// ������������ �����������
-	void sendMessage(QString message, QString fromUsername); //��������� ���������
+	void sendMessage(QString fromUsername); //��������� ��������� QString message, 
 	void printServerInfo(QString messsage);
 	void trace();//�������� ������
 	void saveIntoTrace();//��������� ������ � ������

@@ -1,14 +1,16 @@
 #include <QtCore/QCoreApplication>
-#include <QApplication>
-#include "ServerGUI.h"
+
+#include "CChatTrace.h"
+#include "FileTraceDestination.h"
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-
-	ServerGUI win(800, 600);
-
-	win.show();
-
-	return a.exec();
+	CChatTrace* trace = new CChatTrace();
+	trace->import("trace.txt");
+	FileTraceDestination* fdest = new FileTraceDestination("trace.txt");
+	trace->addDestination(fdest);
+	trace->add("kek", MessageSeverity::DEBUG);
+	trace->add("ALARM!! SPOILERS!!!", MessageSeverity::WARNING);
+	trace->add("Max is gay", MessageSeverity::EVENT);
+	return 0;
 }

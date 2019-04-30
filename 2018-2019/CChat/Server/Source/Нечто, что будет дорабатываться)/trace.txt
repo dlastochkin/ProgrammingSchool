@@ -1,0 +1,9 @@
+Error(30.04.2019, 16:04:03): File open failed
+Error(30.04.2019, 16:09:53): Parse failed
+Debug(30.04.2019, 16:04:03): kek
+Error(30.04.2019, 16:09:53): Parse failed
+Debug(30.04.2019, 16:04:38): kek
+Error(30.04.2019, 16:09:53): Parse failed
+Debug(30.04.2019, 16:09:53): kek
+Warning(30.04.2019, 16:09:53): ALARM!! SPOILERS!!!
+Event(30.04.2019, 16:09:53): Max is gay
