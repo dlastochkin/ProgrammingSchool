@@ -12,7 +12,7 @@ ClientGraphic::ClientGraphic(int width, int height) : QMainWindow()
 	centralLayout = new QVBoxLayout(centralFrame); //
 	this->setCentralWidget(centralFrame);		  // Frame / Layout
 	centralFrame->setLayout(centralLayout);		 //
-	centralLayout->setAlignment(Qt::AlignBottom);
+
 	messageDisplay = new MessageDisplayWidget(); // Инициализация виджета вывода сообщений
 
 	drawChatInterface();
@@ -21,11 +21,10 @@ ClientGraphic::ClientGraphic(int width, int height) : QMainWindow()
 	printMessage();
 	setMessageAndUserName("Hek fnsdjk be so happy to see you today! ", "djklsamndas");
 	printMessage();
-	setMessageAndUserName("","");
+	setMessageAndUserName("f","fadfdsfda");
 	printMessage();
-	setMessageAndUserName("fdafdsafsda", "djklsamndas");
+	setMessageAndUserName("f f f f f f f f f f f f f f f f f f f f f f f f", "djklsamndas");
 	printMessage();
-	
 }
 
 void ClientGraphic::drawConnectionInterface()

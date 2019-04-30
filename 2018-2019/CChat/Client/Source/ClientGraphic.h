@@ -3,7 +3,6 @@
 #include "MessageDisplayWidget.h"
 #include <QPushButton>
 #include <QColor>
-#include <QScrollBar>
 
 class ClientGraphic : public QMainWindow
 {

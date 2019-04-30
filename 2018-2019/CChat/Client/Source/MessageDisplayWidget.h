@@ -10,6 +10,7 @@
 #include <QApplication>
 #include <iostream>
 #include <QTextEdit>
+#include <QScrollBar>
 
 class MessageDisplayWidget : public QWidget
 {
