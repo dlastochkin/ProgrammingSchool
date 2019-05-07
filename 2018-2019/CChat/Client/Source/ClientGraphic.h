@@ -6,6 +6,8 @@
 
 class ClientGraphic : public QMainWindow
 {
+	Q_OBJECT
+
 public:
 	ClientGraphic(int width, int height);
 	~ClientGraphic();
@@ -23,17 +25,13 @@ private:
 	QVBoxLayout* centralLayout = NULL;
 	MessageDisplayWidget* messageDisplay = NULL; //Виджет вывода сообщений
 	QTextEdit* inputField = NULL;				 //Поле ввода текста
-	QPushButton* userListButton = NULL;			
+	QPushButton* userListButton = NULL;
 	QPushButton* sendButton = NULL;
 	QString messageText = "";
-	QString userName = "";
+	QString userName = "UserName";
+	QString conferenceName = "ConferenceName";
 
-public slots:
-	void showUserList(); //Показывает участников чата, 
-							//но скорее всего за это будет отвечать 
-								//выпадающая кнопка userLisetButton
-
-	void sendMessage(); //Вывод сообщения клиента
+private slots:
+	QString sendMessage(); //Вывод сообщения клиента
 };
-
 

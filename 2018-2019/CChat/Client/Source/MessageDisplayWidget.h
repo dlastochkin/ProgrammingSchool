@@ -1,6 +1,5 @@
 #pragma once
 #include <QWidget>
-#include <QWidget>
 #include <QScrollArea>
 #include <QMainWindow>
 #include <QVBoxLayout>
@@ -17,15 +16,16 @@ class MessageDisplayWidget : public QWidget
 	Q_OBJECT
 
 public:
-	MessageDisplayWidget(); 
+	MessageDisplayWidget();
 	~MessageDisplayWidget();
 
-	void clear(); //РћС‡РёСЃС‚РєР° СЃРѕРґРµСЂР¶РёРјРѕРіРѕ 
-	void setScrollArea(QFrame* parent, QVBoxLayout* layout); //РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РІРёРґР¶РµС‚Р° РІС‹РІРѕРґР° СЃРѕРѕР±С‰РµРЅРёР№
-	void printMessage(QString messageText, QString userName); //Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ Рё РёРјРµРЅРё
-	
+	void clear(); //Очистка содержимого 
+	void setScrollArea(QFrame* parent, QVBoxLayout* layout); //Инициализация виджета вывода сообщений
+	void printMessage(QString messageText, QString userName); //Вывод сообщения и имени
+
 private:
 	QVBoxLayout* scrollAreaLayout = NULL;
 	QScrollArea* scrollArea = NULL;
 	QWidget* scrollAreaWidget = NULL;
+	QScrollBar* scrollBar = NULL;
 };
