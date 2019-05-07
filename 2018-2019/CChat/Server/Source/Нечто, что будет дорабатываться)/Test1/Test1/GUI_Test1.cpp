@@ -62,11 +62,11 @@ void ServerGUI::initialize()
 	label->setFixedWidth(50);
 	label->setAlignment(Qt::AlignRight);
 
-	QTextEdit* portText = new QTextEdit;
-	portLayout->addWidget(portText);
-	portText->setFixedHeight(25);
-	portText->setFixedWidth(150);
-	portText->setAlignment(Qt::AlignLeft);
+	port = new QTextEdit;
+	portLayout->addWidget(port);
+	port->setFixedHeight(25);
+	port->setFixedWidth(150);
+	port->setAlignment(Qt::AlignLeft);
 
 	playOrStopButton = new QPushButton;
 	portLayout->addWidget(playOrStopButton);
@@ -81,6 +81,8 @@ void ServerGUI::initialize()
 	listUsersName = new QListWidget;
 	listOfConnectedAndButtonsLayout->addWidget(listUsersName);
 	listUsersName->setFixedWidth(300);
+
+	contextmenu = new QMenu(listUsersName);
 
 	QHBoxLayout* showsLayout = new QHBoxLayout;
 	showsLayout->setMargin(0);
@@ -99,6 +101,11 @@ void ServerGUI::initialize()
 	listOfConnectedAndButtonsLayout->addLayout(showsLayout);
 
 	connect(showTraceButton, SIGNAL(clicked()), this, SLOT(traceSlot()));
+
+	QAction* deleteClient = new QAction();
+
+	contextmenu->addAction(deleteClient);
+	
 }
 
 
@@ -129,7 +136,7 @@ void ServerGUI::startOrStopSlot()
 	if (playNow == true)
 	{
 		emit stopServerSignal();
-		mediaStateChangedSlot(playNow);
+		mediaStateChangedSlot();
 		printf("0");
 	}
 	else
@@ -137,19 +144,20 @@ void ServerGUI::startOrStopSlot()
 		if (port->toPlainText() != "")
 		{
 			emit startServerSignal();
-			mediaStateChangedSlot(playNow);
+			mediaStateChangedSlot();
+			port->setStyleSheet("QTextEdit {background-color : rgb(255, 255, 255);}");
 			printf("1");
 		}
 		else
 		{
-			port->setStyleSheet("QTextEdit {background-color : QColor(255, 0 , 0, 255)}");
+			port->setStyleSheet("QTextEdit {background : rgb(255, 0, 0);}");
 			printf("2");
 		}
 
 	}
 }
 
-void ServerGUI::mediaStateChangedSlot(bool playNow)
+void ServerGUI::mediaStateChangedSlot()
 {
 	if (playNow == true)
 	{

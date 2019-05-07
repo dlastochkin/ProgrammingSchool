@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include <QListWidget>
 #include <QLabel>
+#include <QMenu>
+
 
 class ServerGUI : public QMainWindow
 {
@@ -18,6 +20,7 @@ private:
 	QPushButton* playOrStopButton;
 	QListWidget* listUsersName;
 	QLabel* withWhomDialog;
+	QMenu* contextmenu;
 	
 
 	void initialize();
@@ -40,7 +43,7 @@ private slots:
 	void kickSlot();
 	void showMoreSlot();
 	void startOrStopSlot();
-	void mediaStateChangedSlot(bool playNow);
+	void mediaStateChangedSlot();
 
 public:
 	ServerGUI(int width, int height);

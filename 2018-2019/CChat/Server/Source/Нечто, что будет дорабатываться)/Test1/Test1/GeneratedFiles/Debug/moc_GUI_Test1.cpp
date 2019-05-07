@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ServerGUI_t {
-    QByteArrayData data[15];
-    char stringdata0[186];
+    QByteArrayData data[14];
+    char stringdata0[178];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,17 +41,15 @@ QT_MOC_LITERAL(8, 103, 8), // "kickSlot"
 QT_MOC_LITERAL(9, 112, 12), // "showMoreSlot"
 QT_MOC_LITERAL(10, 125, 15), // "startOrStopSlot"
 QT_MOC_LITERAL(11, 141, 21), // "mediaStateChangedSlot"
-QT_MOC_LITERAL(12, 163, 7), // "playNow"
-QT_MOC_LITERAL(13, 171, 9), // "addClient"
-QT_MOC_LITERAL(14, 181, 4) // "name"
+QT_MOC_LITERAL(12, 163, 9), // "addClient"
+QT_MOC_LITERAL(13, 173, 4) // "name"
 
     },
     "ServerGUI\0startServerSignal\0\0"
     "stopServerSignal\0sendMessageConectSlot\0"
     "messsage\0sendMessageSlot\0traceSlot\0"
     "kickSlot\0showMoreSlot\0startOrStopSlot\0"
-    "mediaStateChangedSlot\0playNow\0addClient\0"
-    "name"
+    "mediaStateChangedSlot\0addClient\0name"
 };
 #undef QT_MOC_LITERAL
 
@@ -79,8 +77,8 @@ static const uint qt_meta_data_ServerGUI[] = {
        8,    0,   73,    2, 0x08 /* Private */,
        9,    0,   74,    2, 0x08 /* Private */,
       10,    0,   75,    2, 0x08 /* Private */,
-      11,    1,   76,    2, 0x08 /* Private */,
-      13,    1,   79,    2, 0x0a /* Public */,
+      11,    0,   76,    2, 0x08 /* Private */,
+      12,    1,   77,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -93,8 +91,8 @@ static const uint qt_meta_data_ServerGUI[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   12,
-    QMetaType::Void, QMetaType::QString,   14,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   13,
 
        0        // eod
 };
@@ -113,7 +111,7 @@ void ServerGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 5: _t->kickSlot(); break;
         case 6: _t->showMoreSlot(); break;
         case 7: _t->startOrStopSlot(); break;
-        case 8: _t->mediaStateChangedSlot((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 8: _t->mediaStateChangedSlot(); break;
         case 9: _t->addClient((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
