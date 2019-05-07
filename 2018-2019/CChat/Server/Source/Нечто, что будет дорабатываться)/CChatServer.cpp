@@ -1,7 +1,7 @@
 #include <QDataStream>
 #include "CChatServer.h"
 
-
+/*
 #define VERSION				0x1
 #define CLIENT_CONNECTED	0x2
 #define CLIENTS_LIST		0X3
@@ -14,18 +14,131 @@
 #define KEEP_ALIVE_RS		0XA
 #define SERVER_REJECTED_REQUEST		0XB
 
+#define EXCEPTION QString;
+#define NULL_MESSAGE_EXCEPTION "Null message";*/
+
 
 void CChatServer::sendMessageConect(QString messsage)
 {
 	
 }
 
+void CChatServer::sendMessageTo(QString text, QString toUsername)
+{
+	QByteArray messageBytes;
+	QDataStream os(&messageBytes, QIODevice::WriteOnly);
+	//need to convert our text toi bite array with the tags
+	//if MESSAGETYPE bla-bla-bla
+	//if private message
+
+	switch (messageType)
+	{
+	case PRIVATE_MESSAGE:
+		os << messageType << quint32(0) << text;
+		os.device()->seek(1);
+
+		os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+		foreach(QString value, clients.values())
+		{
+			if (value == toUsername) clients.key(value)->write(messageBytes);// only one (if with no that: !=)
+		}
+		break;
+
+	case CHAT_MESSAGE:
+		os << messageType << quint32(0) << text;
+		os.device()->seek(1);
+
+		os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+		foreach(QString value, clients.values())
+		{
+			clients.key(value)->write(messageBytes);// for all
+		}
+		break;
+
+	case KICK:
+		os << messageType << quint32(0) << text; //reason
+		os.device()->seek(1);
+
+		os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+		foreach(QString value, clients.values())
+		{
+			if (value == toUsername)
+			{
+				clients.key(value)->write(messageBytes);// for one
+				//disconnect user
+				clients.remove(clients.key(value));//remove from QMap
+			}
+		}
+		break;
+
+	case SERVER_SHUTDOWN:
+		os << messageType << quint32(0) << "Server shutdown";
+		os.device()->seek(1);
+
+		os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+		foreach(QString value, clients.values())
+		{
+				clients.key(value)->write(messageBytes);// for all
+				//disconnect users
+				clients.remove(clients.key(value));//remove from QMap
+		}
+		break;
+
+	case SERVER_REJECTED_REQUEST:
+		os << messageType << quint32(0) << text; //reason
+		os.device()->seek(1);
+
+		os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+		foreach(QString value, clients.values())
+		{
+			if (value == toUsername)
+			{
+				clients.key(value)->write(messageBytes);// for one
+				//what to do??
+			}
+		}
+		break;
+
+	case KEEP_ALIVE_RQ:
+		os << messageType << quint32(0) << text; //reason
+		os.device()->seek(1);
+
+		os << quint32(messageBytes.size() - sizeof(quint32) - sizeof(quint8));
+
+		foreach(QString value, clients.values())
+		{
+			if (value == toUsername)
+			{
+				clients.key(value)->write(messageBytes);// for one
+				//what to do??
+			}
+		}
+		break;
+
+	default:
+		break;
+	}
+
+
+	
+}
+
 void CChatServer::sendMessage(QString fromUsername)
 {
 		QByteArray messageBytes;		
-		QDataStream os(&messageBytes, QIODevice::WriteOnly);
+		QDataStream os(&messageBytes, QIODevice::ReadWrite);
 		//QTcpSocket* fromSocket;
 		//QDataStream out(&messageBytes, QIODevice::WriteOnly);
+
+		if (messageBytes == "")
+		{
+			throw NULL_MESSAGE_EXCEPTION + " from:" + fromUsername;
+		}
 
 		qint8 type;
 
@@ -34,6 +147,8 @@ void CChatServer::sendMessage(QString fromUsername)
 
 		qint32 length;
 		os >> length;
+
+		
 
 		QString message;
 		os >> message;
@@ -79,6 +194,11 @@ void CChatServer::sendMessage(QString fromUsername)
 		case PRIVATE_MESSAGE:
 		{
 			QStringList to = message.split("\0");
+
+			if (to.length() < 2);
+			{
+				throw NOT_FULL_MESSAGE_EXCEPTION + " from:" + fromUsername;
+			}
 			
 			os << type << quint32(0) << fromUsername + ":" + to[1];//message
 			os.device()->seek(1);
