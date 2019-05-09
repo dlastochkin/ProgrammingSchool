@@ -1,66 +1,15 @@
 #pragma once
 #include <QObject>
 #include "TraceMessage.h"
-#include <iostream>
 
-TraceMessage::TraceMessage(QString body, int type, QDateTime* dateTime, QObject* parent) : QObject(parent)
+TraceMessage::TraceMessage(QString body, MessageSeverity const* type, QObject* parent) : QObject(parent)
 {
 	this->body = body;
 	this->type = type;
-	if (dateTime == nullptr)
-	{
-		this->dateTime = new QDateTime(QDate::currentDate(), QTime::currentTime());
-	}
-	else
-	{
-		if (dateTime->isValid())
-		{
-			this->dateTime = dateTime;
-		}
-		else
-		{
-			this->dateTime->setDate(QDate::currentDate());
-			this->dateTime->setTime(QTime::currentTime());
-		}
-	}
+	dateTime = QDateTime(QDate::currentDate(), QTime::currentTime());
 }
 
-QString TraceMessage::toString()
-{
-	QString out;
-	switch (type)
-	{
-	case MessageSeverity::DEBUG:
-		out += "Debug(";
-		break;
-	case MessageSeverity::EVENT:
-		out += "Event(";
-		break;
-	case MessageSeverity::WARNING:
-		out += "Warning(";
-		break;
-	case MessageSeverity::ERROR:
-		out += "Error(";
-		break;
-	}
-	if (dateTime != nullptr)
-	{
-		if (!dateTime->isValid())
-		{
-			dateTime->setDate(QDate::currentDate());
-			dateTime->setTime(QTime::currentTime());
-		}
-	}
-	else
-	{
-		dateTime = new QDateTime(QDate::currentDate(), QTime::currentTime());
-	}
-	out += dateTime->toString("dd.MM.yyyy, hh:mm:ss");
-	out += "): " + body;
-	return out;
-}
-
-bool TraceMessage::fromString(QString str)
+TraceMessage::TraceMessage(QString str, QObject* parent) : QObject(parent)
 {
 	int i, i1;
 	for (i = 0; i < str.size(); ++i)
@@ -68,30 +17,13 @@ bool TraceMessage::fromString(QString str)
 		if (str[i] == '(') break;
 	}
 	QString tmp = str.left(i);
-	if (tmp == "Debug")
-	{
-		type = MessageSeverity::DEBUG;
+	try {
+		this->type = MessageSeverity::fromString(tmp);
 	}
-	else if (tmp == "Event")
-	{
-		type = MessageSeverity::EVENT;
+	catch (EXCEPTION ex) {
+		throw ex;
 	}
-	else if (tmp == "Warning")
-	{
-		type = MessageSeverity::WARNING;
-	}
-	else if (tmp == "Error")
-	{
-		type = MessageSeverity::ERROR;
-	}
-	else
-	{
-		body = "Parse failed";
-		type = MessageSeverity::ERROR;
-		dateTime->setDate(QDate::currentDate());
-		dateTime->setTime(QTime::currentTime());
-		return false;
-	}
+
 	++i;
 	for (i1 = i + 1; i1 < str.size(); ++i1)
 	{
@@ -99,23 +31,31 @@ bool TraceMessage::fromString(QString str)
 	}
 	tmp = str.mid(i, i1 - i);
 	//delete dateTime;
-	QDateTime* dt;
-	dt = new QDateTime(QDateTime::fromString(tmp, "dd.MM.yyyy, hh:mm:ss"));
-	dateTime = dt;
-	if (dateTime->isNull())
+	QDateTime * dt;
+	this->dateTime = QDateTime(QDateTime::fromString(tmp, "dd.MM.yyyy, hh:mm:ss"));
+	if (dateTime.isNull())
 	{
-		body = "Parse failed";
-		type = MessageSeverity::ERROR;
-		dateTime->setDate(QDate::currentDate());
-		dateTime->setTime(QTime::currentTime());
-		return false;
+		throw IO_EXCEPTION;
 	}
 	i1 += 3;
-	body = str.right(str.size()-i1);
-	return true;
+	this->body = str.right(str.size() - i1);
 }
 
-int TraceMessage::getType()
+QString TraceMessage::toString()
 {
-	return type;
+	QString out = type->toString() + "(";
+
+	if (!dateTime.isValid())
+	{
+		dateTime.setDate(QDate::currentDate());
+		dateTime.setTime(QTime::currentTime());
+	}
+	out += dateTime.toString("dd.MM.yyyy, hh:mm:ss");
+	out += "): " + body;
+	return out;
+}
+
+MessageSeverity TraceMessage::getType()
+{
+	return *type;
 }
