@@ -11,7 +11,7 @@ class CChatTraceWidget : public QWidget
 private:
 	QListWidget* listWidget;
 private slots:
-	void filterItems(QString text);
+	void filterItems(int severity);
 public:
 	CChatTraceWidget(QWidget* parent = nullptr);
 	void initialize();

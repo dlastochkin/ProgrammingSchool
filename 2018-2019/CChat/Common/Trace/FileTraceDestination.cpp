@@ -8,12 +8,8 @@ FileTraceDestination::FileTraceDestination(QString destinationFilename, QObject 
 	{
 		if (file.exists())
 		{
-			//exception
+			throw IO_EXCEPTION;
 			return;
-		}
-		else
-		{
-			//create
 		}
 	}
 	out = new QTextStream(&file);
