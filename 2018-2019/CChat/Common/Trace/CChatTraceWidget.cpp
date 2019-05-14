@@ -4,19 +4,11 @@
 #include <QVBoxLayout>
 #include <QComboBox>
 
-void CChatTraceWidget::filterItems(QString text)
+void CChatTraceWidget::filterItems(int severity)
 {
-	if (text == "")
-	{
-		for (int row = 0; row < listWidget->count(); ++row)
-		{
-			(listWidget->item(row))->setHidden(false);
-		}
-		return;
-	}
 	for (int row = 0; row < listWidget->count(); ++row)
 	{
-		if ((listWidget->item(row))->data(Qt::UserRole) == QVariant(text))
+		if (((listWidget->item(row)->data(Qt::UserRole))) >= severity)
 		{
 			(listWidget->item(row))->setHidden(false);
 		}
@@ -40,12 +32,12 @@ void CChatTraceWidget::initialize()
 
 	//filter
 	QComboBox* filter = new QComboBox(this);
-	filter->addItem("");
+	//filter->addItem("");
 	filter->addItem("DEBUG");
 	filter->addItem("EVENT");
 	filter->addItem("WARNING");
 	filter->addItem("ERROR");
-	filter->connect(filter, SIGNAL(activated(QString)), this, SLOT(filterItems(QString)));
+	filter->connect(filter, SIGNAL(highlighted(int)), this, SLOT(filterItems(int)));
 	layout->addWidget(filter);
 
 	//message list
@@ -56,25 +48,26 @@ void CChatTraceWidget::TraceMessageToQListWidgetItem(TraceMessage* message)
 {
 	QListWidgetItem* item = new QListWidgetItem();
 	item->setText(message->toString());
-	int type = message->getType();
-	switch (type)
+	MessageSeverity type = message->getType();
+	if (type.equals(MessageSeverity::DEBUG))
 	{
-	case MessageSeverity::DEBUG:
-		item->setForeground(QBrush(QColor(0, 192, 0)));
-		item->setData(Qt::UserRole, QVariant("DEBUG"));
-		break;
-	case MessageSeverity::EVENT:
+		item->setForeground(QBrush(QColor(128, 128, 128)));
+		item->setData(Qt::UserRole, 0);
+	}
+	else if (type.equals(MessageSeverity::EVENT))
+	{
 		item->setForeground(QBrush(QColor(0, 0, 128)));
-		item->setData(Qt::UserRole, QVariant("EVENT"));
-		break;
-	case MessageSeverity::WARNING:
-		item->setForeground(QBrush(QColor(240, 192, 0)));
-		item->setData(Qt::UserRole, QVariant("WARNING"));
-		break;
-	case MessageSeverity::ERROR:
-		item->setForeground(QBrush(QColor(255, 0, 0)));
-		item->setData(Qt::UserRole, QVariant("ERROR"));
-		break;
+		item->setData(Qt::UserRole, 1);
+	}
+	else if (type.equals(MessageSeverity::WARNING))
+	{
+		item->setForeground(QBrush(QColor(224, 168, 0)));
+		item->setData(Qt::UserRole, 2);
+	}
+	else if (type.equals(MessageSeverity::ERROR))
+	{
+		item->setForeground(QBrush(QColor(192, 0, 0)));
+		item->setData(Qt::UserRole, 3);
 	}
 	listWidget->addItem(item);
 }

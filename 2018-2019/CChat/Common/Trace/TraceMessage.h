@@ -8,12 +8,12 @@ class TraceMessage : public QObject
 {
 	Q_OBJECT
 private:
-	int type;
+	MessageSeverity const* type;
 	QString body;
-	QDateTime* dateTime;
+	QDateTime dateTime;
 public:
-	TraceMessage(QString body, int type, QDateTime* dateTime = nullptr, QObject* parent = nullptr);
-	QString toString();
-	bool fromString(QString str); //overwrites this; returns false if parse failed and true otherwise
-	int getType();
+	TraceMessage(QString body, MessageSeverity const* type, QObject* parent = nullptr);
+	TraceMessage(QString str, QObject* parent = nullptr); //from string
+	QString toString(); 
+	MessageSeverity getType();
 };
