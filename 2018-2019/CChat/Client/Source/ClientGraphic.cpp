@@ -13,94 +13,39 @@ ClientGraphic::ClientGraphic(int width, int height) : QMainWindow()
 	this->setCentralWidget(centralFrame);		  // Frame / Layout
 	centralFrame->setLayout(centralLayout);		 //
 
-	messageDisplay = new MessageDisplayWidget(); // Инициализация виджета вывода сообщений
+	centralLayout->setMargin(0);
 
-	drawChatInterface();
-}
-
-void ClientGraphic::drawConnectionInterface()
-{
+	tabWidget = new QTabWidget(centralFrame);
+	tabWidget->setStyleSheet("QTabWidget::pane { border: 0; }");
+	centralLayout->addWidget(tabWidget);
 	
+	AI = new AuthorizationInterface(this);
+
+	tabWidget->addTab(AI->connectionInterfaceFrame, "Authorization");
+	connect(AI->connectButton, SIGNAL(clicked()), this, SLOT(authorizationIsEnd()));
+	
+
 }
 
-void ClientGraphic::drawChatInterface()
+void ClientGraphic::createDialog(QString userName)
 {
-	//===========Название конференции / имя адресата и кнопка показа всех участников
-	QHBoxLayout* confName_UsersButton = new QHBoxLayout(centralFrame);
-	QLabel* confName = new QLabel(conferenceName);
-	confName->setStyleSheet("QLabel { background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255); padding: 0px 0px 0px 5px;}}");
-	confName->setFont(QFont("Courier", 15, QFont::Bold));
-
-	userListButton = new QPushButton("Users", centralFrame);
-	userListButton->setMinimumSize(60, 50);
-	userListButton->setMaximumSize(100, 90);
-	userListButton->setFont(QFont("Courier", 15, QFont::Bold));
-	userListButton->setStyleSheet("QPushButton {background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255);}");
-
-	confName_UsersButton->addWidget(confName);
-	confName_UsersButton->addWidget(userListButton);
-	centralLayout->addLayout(confName_UsersButton);
-
-	//===========Виджет вывода сообщений
-	messageDisplay->setScrollArea(centralFrame, centralLayout);
-
-	//===========Поле ввода текста и кнопка SEND===========================
-	QHBoxLayout* sendButton_InputField = new QHBoxLayout(centralFrame);
-	sendButton = new QPushButton("Send", centralFrame);
-	sendButton->setMinimumHeight(40);
-	sendButton->setMaximumSize(50, 45);
-	sendButton->setFont(QFont("Courier", 13, QFont::Bold));
-	sendButton->setStyleSheet("QPushButton {background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255);}");
-	sendButton->connect(sendButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
-
-	drawInputField(centralFrame, sendButton_InputField);
-	sendButton_InputField->addWidget(sendButton);
-	centralLayout->addLayout(sendButton_InputField);
+	GraphicWidget* user = new GraphicWidget(tabWidget, userName, 0);
+	user->setUserName(userName);
+	tabWidget->addTab(user->graphicWidget, userName);
 }
 
-void ClientGraphic::drawInputField(QFrame* parent, QHBoxLayout* layout)
+void ClientGraphic::authorizationIsEnd()
 {
-	QScrollBar* scroll = new QScrollBar(parent);
-	inputField = new QTextEdit(parent);
-	layout->addWidget(inputField);
-	inputField->setPlaceholderText("Enter your message...");
-	inputField->setMinimumSize(100, 30);
-	inputField->setMaximumHeight(40);
-	inputField->setFont(QFont("Courier", 9, QFont::Bold));
-	inputField->setVerticalScrollBar(scroll);
-	inputField->setStyleSheet("QTextEdit {background-color : QColor(0, 0, 65, 255); color : QColor(0, 0, 180, 255);}");
-	inputField->setFrameShape(QFrame::NoFrame);
-}
-
-void ClientGraphic::drawUserTable()
-{
-}
-
-void ClientGraphic::setMessageAndUserName(QString message, QString username)
-{
-	messageText = message;
-	userName = username;
-}
-
-
-QString ClientGraphic::sendMessage()
-{
-	messageText = inputField->toPlainText();
-	//if (!messageText.isEmpty())
+	//if (clientConnected)
 	{
-		setMessageAndUserName(messageText, userName);
-		printMessage();
-		inputField->clear();
+		tabWidget->removeTab(0);
+		hub = new Hub(centralFrame, userName);
+		tabWidget->addTab(hub->hubInterfaceFrame, "Hub");
+		connect(hub->usersListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(addUser("kkkkk")));
 	}
-
-	return messageText;
-}
-
-void ClientGraphic::printMessage()
-{
-	messageDisplay->printMessage(messageText, userName);
 }
 
 ClientGraphic::~ClientGraphic()
 {
+
 }

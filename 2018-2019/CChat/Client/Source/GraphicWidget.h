@@ -3,25 +3,25 @@
 #include "MessageDisplayWidget.h"
 #include <QPushButton>
 #include <QColor>
+#include <QTabWidget>
 
-class GraphicWidget : public QMainWindow
+class GraphicWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	GraphicWidget(int width, int height);
+	GraphicWidget(QWidget* parent, QString name, int id);
 	~GraphicWidget();
-	void drawConnectionInterface(); //Отрисовка стартового окна
 	void drawChatInterface(); //Отрисовка самого чата 
-
-private:
-	void drawInputField(QFrame* parent, QHBoxLayout* layout); //ПОле вывода сообщений
-	void drawUserTable(); //Таблица пользователей
-	void setMessageAndUserName(QString message, QString username);
+	void setMessageAndUserName(QString message, QString username); //Для общих чатов
 	void printMessage(); //отрисовка сообщений
+	void setUserName(QString username); //Для личных соообщений
+	QFrame* graphicWidget = NULL;
 
 private:
-	QFrame* centralFrame = NULL;
+	void drawInputField(QFrame* parent, QHBoxLayout* layout); //ПОле ввода сообщений
+
+private:
 	QVBoxLayout* centralLayout= NULL;
 	QFrame* chatInterfaceFrame = NULL;
 	QVBoxLayout* chatInterfaceLayout = NULL;
@@ -34,7 +34,6 @@ private:
 	QString conferenceName = "ConferenceName";
 	QTabWidget* tabWidget = NULL;
 	
-
 private slots:
 	QString sendMessage(); //Вывод сообщения клиента
 

@@ -1,8 +1,10 @@
 #pragma once
 #include <QWidget.h>
-#include "MessageDisplayWidget.h"
-#include <QPushButton>
-#include <QColor>
+#include <QMainWindow>
+#include <QApplication>
+#include "AuthorizationInterface.h"
+#include "Hub.h"
+#include "GraphicWidget.h"
 
 class ClientGraphic : public QMainWindow
 {
@@ -11,27 +13,19 @@ class ClientGraphic : public QMainWindow
 public:
 	ClientGraphic(int width, int height);
 	~ClientGraphic();
-	void drawConnectionInterface(); //Отрисовка стартового окна
-	void drawChatInterface(); //Отрисовка самого чата 
 
 private:
-	void drawInputField(QFrame* parent, QHBoxLayout* layout); //ПОле вывода сообщений
-	void drawUserTable(); //Таблица пользователей
-	void setMessageAndUserName(QString message, QString username);
-	void printMessage(); //отрисовка сообщений
+	void createDialog(QString userName);
 
 private:
 	QFrame* centralFrame = NULL;
 	QVBoxLayout* centralLayout = NULL;
-	MessageDisplayWidget* messageDisplay = NULL; //Виджет вывода сообщений
-	QTextEdit* inputField = NULL;				 //Поле ввода текста
-	QPushButton* userListButton = NULL;
-	QPushButton* sendButton = NULL;
-	QString messageText = "";
+	QTabWidget* tabWidget = NULL;
 	QString userName = "UserName";
-	QString conferenceName = "ConferenceName";
+	AuthorizationInterface* AI = NULL;
+	Hub* hub = NULL;
 
 private slots:
-	QString sendMessage(); //Вывод сообщения клиента
+	void authorizationIsEnd();
 };
 

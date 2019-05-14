@@ -1,51 +1,27 @@
 #include "GraphicWidget.h"
 
-GraphicWidget::GraphicWidget(int width, int height) : QMainWindow()
+GraphicWidget::GraphicWidget(QWidget* parent, QString name, int id)
 {
-	QDesktopWidget* desktop = QApplication::desktop();  //
-	this->setGeometry(500, 100, width, height);
-	this->setMinimumSize(400, 500);// Окно
-
-	this->setStyleSheet("background-color : QColor(0, 0, 35, 255);"); // цвет заднего фона
-
-	centralFrame = new QFrame(this);							//
-	centralLayout = new QVBoxLayout(centralFrame);			   //
-	this->setCentralWidget(centralFrame);		              // Frame / Layout
-	centralFrame->setLayout(centralLayout);	                 //
-
-	centralLayout->setMargin(0);
-
-	tabWidget = new QTabWidget(centralFrame);
-	tabWidget->setStyleSheet("QTabWidget::pane { border: 0; }");
-	centralLayout->addWidget(tabWidget);
+	graphicWidget = new QFrame(parent);						   //
+	centralLayout = new QVBoxLayout(graphicWidget);			  // Frame / Layout		          
+	graphicWidget->setLayout(centralLayout);	             //
 
 	messageDisplay = new MessageDisplayWidget(); // Инициализация виджета вывода сообщений
+
+	conferenceName = name;
 
 	drawChatInterface();
 }
 
-void GraphicWidget::drawConnectionInterface()
-{
-	
-}
-
 void GraphicWidget::drawChatInterface()
 {
-	chatInterfaceFrame = new QFrame(+centralFrame);				
-	chatInterfaceLayout = new QVBoxLayout(chatInterfaceFrame);
-
-	QWidget* wid = new QWidget(this);
-
-	tabWidget->addTab(wid, "aaaaaa");
-	tabWidget->addTab(chatInterfaceFrame, "kkkkkk");
-
 	//===========Название конференции / имя адресата и кнопка показа всех участников
-	QHBoxLayout* confName_UsersButton = new QHBoxLayout(chatInterfaceFrame);
+	QHBoxLayout* confName_UsersButton = new QHBoxLayout(graphicWidget);
 	QLabel* confName = new QLabel(conferenceName);
 	confName->setStyleSheet("QLabel { background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255); padding: 0px 0px 0px 5px;}}");
 	confName->setFont(QFont("Courier", 15, QFont::Bold));
 
-	userListButton = new QPushButton("Users", chatInterfaceFrame);
+	userListButton = new QPushButton("Users", graphicWidget);
 	userListButton->setMinimumSize(60, 50);
 	userListButton->setMaximumSize(100, 90);
 	userListButton->setFont(QFont("Courier", 15, QFont::Bold));
@@ -53,23 +29,23 @@ void GraphicWidget::drawChatInterface()
 
 	confName_UsersButton->addWidget(confName);
 	confName_UsersButton->addWidget(userListButton);
-	chatInterfaceLayout->addLayout(confName_UsersButton);
+	centralLayout->addLayout(confName_UsersButton);
 
 	//===========Виджет вывода сообщений
-	messageDisplay->setScrollArea(chatInterfaceFrame, chatInterfaceLayout);
+	messageDisplay->setScrollArea(graphicWidget, centralLayout);
 
 	//===========Поле ввода текста и кнопка SEND===========================
-	QHBoxLayout* sendButton_InputField = new QHBoxLayout(chatInterfaceFrame);
-	sendButton = new QPushButton("Send", chatInterfaceFrame);
+	QHBoxLayout* sendButton_InputField = new QHBoxLayout(graphicWidget);
+	sendButton = new QPushButton("Send", graphicWidget);
 	sendButton->setMinimumHeight(40);
 	sendButton->setMaximumSize(50, 45);
 	sendButton->setFont(QFont("Courier", 13, QFont::Bold));
 	sendButton->setStyleSheet("QPushButton {background-color : QColor(0, 0, 25, 255); color: QColor(0, 0, 180, 255);}");
-	sendButton->connect(sendButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
+	connect(sendButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
 
-	drawInputField(chatInterfaceFrame, sendButton_InputField);
+	drawInputField(graphicWidget, sendButton_InputField);
 	sendButton_InputField->addWidget(sendButton);
-	chatInterfaceLayout->addLayout(sendButton_InputField);
+	centralLayout->addLayout(sendButton_InputField);
 }
 
 void GraphicWidget::drawInputField(QFrame* parent, QHBoxLayout* layout)
@@ -86,16 +62,16 @@ void GraphicWidget::drawInputField(QFrame* parent, QHBoxLayout* layout)
 	inputField->setFrameShape(QFrame::NoFrame);
 }
 
-void GraphicWidget::drawUserTable()
-{
-}
-
 void GraphicWidget::setMessageAndUserName(QString message, QString username)
 {
 	messageText = message;
 	userName = username;
 }
 
+void GraphicWidget::setUserName(QString username)
+{
+	userName = username;
+}
 
 QString GraphicWidget::sendMessage()
 {
@@ -112,7 +88,7 @@ QString GraphicWidget::sendMessage()
 
 void GraphicWidget::printMessage()
 {
-	messageDisplay->printMessage(messageText, userName);
+	messageDisplay->printMessage(messageText, userName, true);
 }
 
 GraphicWidget::~GraphicWidget()

@@ -4,7 +4,7 @@ MessageDisplayWidget::MessageDisplayWidget()
 {
 }
 
-void MessageDisplayWidget::printMessage(QString messageText, QString userName)
+void MessageDisplayWidget::printMessage(QString messageText, QString userName, bool clientMessage)
 {
 	QFrame* messageFrame = new QFrame(scrollArea); // Фрейм сообщения
 	QVBoxLayout* messageFrameLayout = new QVBoxLayout(messageFrame);
@@ -35,7 +35,12 @@ void MessageDisplayWidget::printMessage(QString messageText, QString userName)
 
 	message->setText(messageText);
 	message->setFont(messageFont); // Устанавливаем стиль текста
-	message->setStyleSheet("background-color : QColor(0, 0, 65, 255); border:0px solid black; color : QColor(0, 0, 180, 255);"); // Красивый задний фон сообщения блин
+	if (clientMessage)
+		message->setStyleSheet("background-color : QColor(0, 0, 65, 255);"
+			"border:0px solid black; color : QColor(0, 0, 180, 255);"); //Если сообщение от юзера
+	else
+		message->setStyleSheet("background-color : QColor(0, 0, 65, 255);"
+			"border:0px solid black; color : QColor(30, 0, 180, 255);"); //Если сообщение от сервера
 	message->setReadOnly(true);
 	message->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	message->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -57,14 +62,10 @@ void MessageDisplayWidget::printMessage(QString messageText, QString userName)
 	scrollBar->setValue(scrollBar->maximum()); // поэтому приходится делатб так
 
 	scrollAreaLayout->addWidget(messageFrame);
-	
-	
-	
 }
 
 void MessageDisplayWidget::setScrollArea(QFrame * parent, QVBoxLayout * layout)
 {
-
 	scrollBar = new QScrollBar(parent);
 	scrollArea = new QScrollArea(parent);
 	scrollAreaLayout = new QVBoxLayout(scrollArea);
