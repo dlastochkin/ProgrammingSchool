@@ -23,7 +23,7 @@ void CChatServer::sendMessageConect(QString messsage)
 	
 }
 
-void CChatServer::sendMessageTo(QString text, QString toUsername)
+void CChatServer::sendMessageTo(QString text, qint8 messageType, QString toUsername)
 {
 	QByteArray messageBytes;
 	QDataStream os(&messageBytes, QIODevice::WriteOnly);
@@ -130,6 +130,10 @@ void CChatServer::sendMessageTo(QString text, QString toUsername)
 
 void CChatServer::sendMessage(QString fromUsername)
 {
+		foreach(QString value, clients.values())
+		{
+			if (value == fromUsername) keepAliveCouners[clients.key(value)] = ONLINE;
+		}
 		QByteArray messageBytes;		
 		QDataStream os(&messageBytes, QIODevice::ReadWrite);
 		//QTcpSocket* fromSocket;
@@ -237,7 +241,10 @@ void CChatServer::sendMessage(QString fromUsername)
 		}
 		case KEEP_ALIVE_RS:
 		{
-			//smth
+			foreach(QString value, clients.values())
+			{
+				if (value == fromUsername) keepAliveCouners[clients.key(value)] = ONLINE;
+			}
 		}
 		}
 }
@@ -316,6 +323,12 @@ void CChatServer::startServer()
 
 void CChatServer::stopServer()
 {
+}
+
+void CChatServer::clientErrorSlot(QAbstractSocket::SocketError socketError)
+{
+	//new thread;
+	//trace->addMessage(socketError.toString(), QMessageSeverity::ERROR);
 }
 
 void CChatServer::updateList()

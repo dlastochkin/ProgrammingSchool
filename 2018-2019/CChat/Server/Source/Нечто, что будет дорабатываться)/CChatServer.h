@@ -18,6 +18,16 @@
 #define KEEP_ALIVE_RS		0XA
 #define SERVER_REJECTED_REQUEST		0XB
 
+#define ONLINE 3
+#define AWAY_STAGE_1 2
+#define AWAY_STAGE_2 1
+#define AWAY_STAGE_3 0
+#define KEEPALIVE_STAGE_1 -1
+#define KEEPALIVE_STAGE_2 -2
+#define KEEPALIVE_STAGE_3 -3
+#define OFFLINE -4
+
+
 
 #include "Exceptions.h"
 
@@ -30,17 +40,16 @@ class CChatServer : public QObject
 private:
 	QTcpServer* server;
 	QMap<QTcpSocket*, QString> clients;
+	QMap<QTcpSocket*, int> keepAliveCouners;
 	quint16 nextBlockSize;
 	qint8 minorV = 0x1;
 	qint8 majorV = 0x0;
-
-	qint8 messageType = PRIVATE_MESSAGE;
 
 
 private:
 	void sendMessageConect(QString messsage); 	// ������������ �����������
 	void sendMessage(QString fromUsername); //��������� ��������� QString message,
-	void sendMessageTo(QString text, QString toUsername);
+	void sendMessageTo(QString text, qint8 messageType, QString toUsername);
 	void printServerInfo(QString messsage);
 	void trace();//�������� ������
 	void saveIntoTrace();//��������� ������ � ������
@@ -52,6 +61,7 @@ private:
 	void showMore(); // ���. ���� ��� ������� �� �������
 
 private slots:
+	void clientErrorSlot(QAbstractSocket::SocketError socketError);
 	void newClientConnectionSlot();					// ����, ������� ����������� ��� ����������� �������
 	void readDataFromClientSlot();					// ����, ������� ����������� ��� ������ ������ �� �������
 	void startServer();
