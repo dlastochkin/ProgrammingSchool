@@ -26,6 +26,9 @@ private:
 	Hub* hub = NULL;
 
 private slots:
-	void authorizationIsEnd();
+	void tryToConnect(QString name, QString ip, quint16 port);
+
+signals:
+	void connectTrying(QString name, QString ip, quint16 port);
 };
 

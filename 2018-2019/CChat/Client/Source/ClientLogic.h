@@ -26,6 +26,8 @@ private:
 	quint16 MinorBite;
 	quint16 MajorBite;
 	QString Name;
+	QString IP;
+	quint16 port;
 	void sendVersion(QString version);
 	QTcpServer* server;
 	QTcpSocket* socket = nullptr;
@@ -53,14 +55,18 @@ private:
 	void keepAliveRS();
 	//RECIEVE_MESSAGE
 	void recieveMessage();
-
+	void start(int w, int h);
 public slots:
 	//void newClientConnectionSlot();					// слот, который срабатывает при подключении клиента
 	//void readDataFromServerSlot();					// слот, который срабатывает при приеме данных от клиента
-	
+	void connectToKek(QString name, QString ip, quint16 port);
+	void connectStatus(bool tmp);
 public:
 	ClientLogic();
 	~ClientLogic();
-
-	void start(int w, int h);
+signals:
+	//void AlrightEveryBody()
+	//void MischaVseHuiniaDavaiPoNovoi()
+	void connectOrNot(bool tmp);
+	
 };

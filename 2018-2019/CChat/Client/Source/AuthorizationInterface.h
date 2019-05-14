@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QTextEdit>
 #include <QPushButton>
+#include <QTextStream>
 
 class AuthorizationInterface : public QWidget
 {
@@ -18,10 +19,17 @@ public:
 
 private:
 	QVBoxLayout* connectionInterfaceLayout;
+	QTextEdit* portField = NULL;
+	QTextEdit* ipField = NULL;
+	QTextEdit* userNameField = NULL;
 
 private:
 	void drawConnectionInterface();
 	
+private slots:
+	void connectButtonClicked();
 
+signals:
+	void connectToServer(QString name, QString ip, quint16 port);
 };
 

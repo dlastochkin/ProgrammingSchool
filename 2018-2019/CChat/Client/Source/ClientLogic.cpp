@@ -11,15 +11,29 @@ ClientLogic::~ClientLogic()
 
 void ClientLogic::start(int w, int h)
 {
-	ClientGraphic* Gui = new ClientGraphic(w, h);
-	Gui->show();
+	ClientGraphic* gui = new ClientGraphic(w, h);
+	gui->show();
 
-	//connect(Gui->AI->connectButton, )
+	connect(gui, SIGNAL(connectTrying(QString, QString, quint16)), this, SLOT(connectToKek()));
+	connect(socket, SIGNAL(error(QAbstractSocket::HostNotFoundError)), this, SLOT(connectStatus()));
 
 	//socket = new QTcpSocket(this);
-	//socket->connectToHost(Gui->port, Gui->host);
+	
+}
 
+void ClientLogic::connectStatus(bool tmp)
+{
+	emit connectOrNot(tmp);
+}
 
+ 
+void ClientLogic::connectToKek(QString name, QString ip, quint16 port)
+{
+	Name = name;
+	IP = ip;
+	this->port = port;
+
+	socket->connectToHost(ip, port, QIODevice::ReadWrite);
 }
 
 /*

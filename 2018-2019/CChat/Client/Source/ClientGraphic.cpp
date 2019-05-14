@@ -22,9 +22,13 @@ ClientGraphic::ClientGraphic(int width, int height) : QMainWindow()
 	AI = new AuthorizationInterface(this);
 
 	tabWidget->addTab(AI->connectionInterfaceFrame, "Authorization");
-	connect(AI->connectButton, SIGNAL(clicked()), this, SLOT(authorizationIsEnd()));
-	
+	connect(AI, SIGNAL(connectToServer(QString, QString, quint16)), this, SLOT(tryToConnect()));
 
+}
+
+void ClientGraphic::tryToConnect(QString name, QString ip, quint16 port)
+{
+	emit connectTrying(name, ip, port);
 }
 
 void ClientGraphic::createDialog(QString userName)
@@ -34,6 +38,7 @@ void ClientGraphic::createDialog(QString userName)
 	tabWidget->addTab(user->graphicWidget, userName);
 }
 
+/*
 void ClientGraphic::authorizationIsEnd()
 {
 	//if (clientConnected)
@@ -44,6 +49,8 @@ void ClientGraphic::authorizationIsEnd()
 		connect(hub->usersListWidget, SIGNAL(itemSelectionChanged()), this, SLOT(addUser("kkkkk")));
 	}
 }
+
+*/
 
 ClientGraphic::~ClientGraphic()
 {

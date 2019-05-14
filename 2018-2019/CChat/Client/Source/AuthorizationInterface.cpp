@@ -12,6 +12,18 @@ AuthorizationInterface::~AuthorizationInterface()
 {
 }
 
+void AuthorizationInterface::connectButtonClicked()
+{
+	QString name = userNameField->toPlainText();
+	QString ip = ipField->toPlainText();
+	QString port = portField->toPlainText();
+	QTextStream portStream(&port);
+	quint16 portNum;
+	portStream >> portNum;
+
+	emit connectToServer(name, ip, portNum);
+}
+
 void AuthorizationInterface::drawConnectionInterface()
 {
 	connectionInterfaceLayout = new QVBoxLayout(connectionInterfaceFrame);
@@ -25,7 +37,7 @@ void AuthorizationInterface::drawConnectionInterface()
 	chatName->setFixedHeight(100);
 	chatName->setStyleSheet("color : QColor(0, 0, 180, 255)");
 
-	QTextEdit* userNameField = new QTextEdit(connectionInterfaceFrame);
+	userNameField = new QTextEdit(connectionInterfaceFrame);
 	QFont fieldsFont("Arial", 15, QFont::Bold);
 	userNameField->setFont(fieldsFont);
 	userNameField->setStyleSheet("background-color : QColor(0, 0, 65, 255); border:0px solid black; color : QColor(0, 0, 180, 255);");
@@ -34,7 +46,7 @@ void AuthorizationInterface::drawConnectionInterface()
 	userNameField->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	userNameField->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-	QTextEdit* portField = new QTextEdit(connectionInterfaceFrame);
+	portField = new QTextEdit(connectionInterfaceFrame);
 	portField->setFont(fieldsFont);
 	portField->setStyleSheet("background-color : QColor(0, 0, 65, 255); border:0px solid black; color : QColor(0, 0, 180, 255);");
 	portField->setPlaceholderText("Port");
@@ -42,7 +54,7 @@ void AuthorizationInterface::drawConnectionInterface()
 	portField->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	portField->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-	QTextEdit* ipField = new QTextEdit(connectionInterfaceFrame);
+	ipField = new QTextEdit(connectionInterfaceFrame);
 	ipField->setFont(fieldsFont);
 	ipField->setStyleSheet("background-color : QColor(0, 0, 65, 255); border:0px solid black; color : QColor(0, 0, 180, 255);");
 	ipField->setPlaceholderText("Ip");
@@ -50,11 +62,12 @@ void AuthorizationInterface::drawConnectionInterface()
 	ipField->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	ipField->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-	 connectButton = new QPushButton("Connect",connectionInterfaceFrame);
+	connectButton = new QPushButton("Connect",connectionInterfaceFrame);
 	QFont buttonFont("Arial", 20, QFont::Bold);
 	connectButton->setStyleSheet("background-color : QColor(0, 0, 25, 255); color : QColor(0, 0, 180, 255);");
 	connectButton->setFixedHeight(40);
 	connectButton->setFont(buttonFont);
+	connect(connectButton, SIGNAL(clicked()), this, SLOT(connectButtonClicked()));
 
 	connectionInterfaceLayout->addWidget(chatName);
 	connectionInterfaceLayout->addWidget(userNameField);
